@@ -268,8 +268,8 @@ export const oficina: Oficina = {
   // Perfil da oficina no Google (place_id conferido em 2026-09-19,
   // perfil-google/ficha/ficha.json#L3). Sem endereço na URL, de propósito.
   linkGoogle: "https://www.google.com/maps/place/?q=place_id:ChIJYbFoyA8_GZURSSrKItDfN44",
-  // VERIFICAR: domínio próprio não confirmado (sem ele não há canonical/og:url/og:image).
-  dominio: "",
+  // URL do deploy na Vercel (repo sandro-mecaninca). Trocar quando houver domínio próprio.
+  dominio: "sandro-mecaninca.vercel.app",
   // VERIFICAR: coordenadas não confirmadas; não inventar.
   geo: null,
   servicos,
