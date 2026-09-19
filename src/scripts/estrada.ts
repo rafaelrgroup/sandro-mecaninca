@@ -44,9 +44,10 @@ function iniciar(): void {
     const r = estrada!.getBoundingClientRect();
     const alturaTela = window.innerHeight;
     // 0 quando o topo da estrada chega a 85% da tela;
-    // 1 quando o fim dela passa de 55% da tela.
+    // 1 quando o fim dela passa de 80% da tela — perto o bastante do pé
+    // para o último marco acender enquanto o passo dele ainda se lê.
     const inicio = alturaTela * 0.85;
-    const fim = alturaTela * 0.55;
+    const fim = alturaTela * 0.8;
     const percurso = r.height + (inicio - fim);
     aplicar(Math.min(1, Math.max(0, (inicio - r.top) / percurso)));
   }

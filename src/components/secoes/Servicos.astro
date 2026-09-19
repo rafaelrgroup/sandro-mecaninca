@@ -97,9 +97,10 @@ const classesSeta =
         ))
       }
 
-      <!-- Faixa "Peças e acessórios": fora dos grupos, em painel escuro
-           chanfrado; mesma linguagem de linha do índice. -->
-      <div class="recorte-chanfro-sm bg-grafite-950 px-sm md:px-lg" data-superficie="grafite" data-faixa-pecas data-reveal>
+      <!-- Faixa "Peças e acessórios": fora dos grupos, mas com a MESMA
+           linha do índice — o painel escuro destoava do resto da lista. -->
+      <div class="relative" data-faixa-pecas data-reveal>
+        <span class={classesTraco} data-traco aria-hidden="true"></span>
         <a
           href={whatsappServico(pecas.servico.nome)}
           target="_blank"
@@ -107,16 +108,16 @@ const classesSeta =
           class={classesLinha}
           data-linha-servico={pecas.servico.slug}
         >
-          <span class="font-display text-xl leading-tight font-extrabold text-ambar-500 tabular-nums">
+          <span class="font-display text-xl leading-tight font-extrabold text-ambar-700 tabular-nums">
             {pecas.codigo}
           </span>
           <span>
-            <span class="block font-display text-xl leading-tight font-bold uppercase text-off-white">
+            <span class="block font-display text-xl leading-tight font-bold uppercase text-grafite-950">
               {pecas.servico.nome}
             </span>
-            <span class="mt-3xs block text-sm leading-snug text-grafite-300">{pecas.servico.resumo}</span>
+            <span class="mt-3xs block text-sm leading-snug text-grafite-500">{pecas.servico.resumo}</span>
           </span>
-          <Icone nome="mdi:arrow-right" class={`${classesSeta} text-off-white`} />
+          <Icone nome="mdi:arrow-right" class={`${classesSeta} text-grafite-800`} />
           <span class={classesFilete} aria-hidden="true" />
         </a>
       </div>

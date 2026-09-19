@@ -92,12 +92,13 @@ const fatos = [
 
     <!-- Início da estrada (DESENHO §5, "parte no hero"): um trecho com as
          classes da estrada do Como funciona, encostado no pé do hero.
-         Vertical até lg, horizontal a partir dele. Estático: sem
-         data-estrada, estrada.ts não o toca; o movimento é de P3. -->
-    <div data-estrada-inicio class="mt-lg flex" aria-hidden="true">
-      <span class="estrada-trecho relative h-xl w-md overflow-hidden lg:h-md lg:w-full">
+         Só a partir de lg (horizontal): abaixo disso o toco vertical
+         solto na borda lia como defeito. Estático: sem data-estrada,
+         estrada.ts não o toca; o movimento é de P3. -->
+    <div data-estrada-inicio class="mt-lg hidden lg:flex" aria-hidden="true">
+      <span class="estrada-trecho relative h-md w-full overflow-hidden">
         <span
-          class="estrada-faixa absolute inset-y-0 left-1/2 w-3xs -translate-x-1/2 lg:inset-x-0 lg:top-1/2 lg:left-0 lg:h-3xs lg:w-auto lg:-translate-y-1/2 lg:translate-x-0"
+          class="estrada-faixa absolute inset-x-0 top-1/2 left-0 h-3xs -translate-y-1/2"
         ></span>
       </span>
     </div>
