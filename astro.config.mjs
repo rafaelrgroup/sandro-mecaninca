@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import oficina from "./src/data/oficina.ts";
@@ -12,7 +13,8 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [icon()],
+  // sitemap só gera com `site` definido (domínio em oficina.ts).
+  integrations: [icon(), sitemap()],
   // DESENHO-APROVADO §3: dev sem a barra de ferramentas do Astro.
   devToolbar: { enabled: false },
 });

@@ -72,8 +72,15 @@ export interface Oficina {
   };
   telefone: string;
   whatsapp: string;
-  /** Horário de atendimento. Vazio até confirmação do cliente. */
+  /** Horário de atendimento (texto de exibição). Vazio até confirmação do cliente. */
   horario: string;
+  /**
+   * Turnos de segunda a sexta para o schema.org
+   * (openingHoursSpecification). Vazio até confirmação do cliente;
+   * horas em "HH:MM". Sábado e domingo fechado: dias sem turno não
+   * entram no JSON-LD.
+   */
+  turnosSemana: { abre: string; fecha: string }[];
   /** Link de avaliações/perfil no Google. Vazio até confirmação do cliente. */
   linkGoogle: string;
   /** Domínio próprio do site. Vazio até confirmação do cliente. */
@@ -263,8 +270,13 @@ export const oficina: Oficina = {
   // VERIFICAR: igual ao telefone por suposição; confirmar com o cliente
   // que esta linha tem WhatsApp.
   whatsapp: "(51) 98138-5899",
-  // VERIFICAR: horário de atendimento não informado pelo cliente.
-  horario: "",
+  // Horário do perfil do Google (print enviado pelo dono em 2026-09-19):
+  // seg–sex 07:30–11:30 e 13:00–18:30; sábado e domingo fechado.
+  horario: "Segunda a sexta, das 07:30 às 11:30 e das 13:00 às 18:30",
+  turnosSemana: [
+    { abre: "07:30", fecha: "11:30" },
+    { abre: "13:00", fecha: "18:30" },
+  ],
   // Perfil da oficina no Google (place_id conferido em 2026-09-19,
   // perfil-google/ficha/ficha.json#L3). Sem endereço na URL, de propósito.
   linkGoogle: "https://www.google.com/maps/place/?q=place_id:ChIJYbFoyA8_GZURSSrKItDfN44",
@@ -331,10 +343,10 @@ export const afirmacoes = {
     texto: "O serviço só começa depois que você conhece e aprova o orçamento.",
     fonte: "cdc-art-40",
   },
-  // google: perfil-google/ficha/ficha.json#L12-13 (nota, total) e #L37-41
-  // (trechos do resumo), grafia do Google sem correção e sem nome de cliente.
-  googleNota: { texto: "4,6", fonte: "google", conferidaEm: "2026-09-19" },
-  googleTotal: { texto: "45 avaliações", fonte: "google", conferidaEm: "2026-09-19" },
+  // google: perfil-google/ficha/ficha.json#L37-41 (trechos do resumo),
+  // grafia do Google sem correção e sem nome de cliente. Nota e total
+  // ficam FORA da lista por decisão do dono (2026-09-19): só os trechos
+  // positivos aparecem na página.
   googleTrecho1: {
     texto: "Ja trabalho a anos com o Sandro,ótimo profissional e preços justos.",
     fonte: "google",

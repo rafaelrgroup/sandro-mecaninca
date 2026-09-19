@@ -13,7 +13,9 @@ import Foto from "@/components/ui/Foto.astro";
 import ProvaSocial from "@/components/ui/ProvaSocial.astro";
 import oficina, { afirmacoes } from "@/data/oficina";
 
-const fatos = [afirmacoes.meiDesde, afirmacoes.cnpjAtivo, afirmacoes.atividadePrincipal];
+// cnpjAtivo fica fora da lista visível (decisão do dono, 2026-09-19):
+// o cliente não precisa ver o CNPJ de cara.
+const fatos = [afirmacoes.meiDesde, afirmacoes.atividadePrincipal];
 ---
 
 <section id="sobre" aria-labelledby="sobre-titulo" class="bg-white py-2xl md:py-4xl">

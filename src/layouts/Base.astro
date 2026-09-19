@@ -1,7 +1,7 @@
 ---
 import "@/styles/global.css";
 import oficina from "@/data/oficina";
-import { gerarJsonLd, urlBase } from "@/lib/jsonld";
+import { gerarFaqJsonLd, gerarJsonLd, urlBase } from "@/lib/jsonld";
 
 interface Props {
   titulo: string;
@@ -16,6 +16,8 @@ const base = urlBase(oficina);
 const canonical = base ? new URL(Astro.url.pathname, base).href : null;
 const ogImagem = base ? new URL("og-image.png", base).href : null;
 const jsonLd = JSON.stringify(gerarJsonLd(oficina)).replace(/</g, "\\u003c");
+const faqLd = gerarFaqJsonLd(oficina);
+const faqJson = faqLd ? JSON.stringify(faqLd).replace(/</g, "\\u003c") : null;
 ---
 
 <!doctype html>
@@ -53,6 +55,7 @@ const jsonLd = JSON.stringify(gerarJsonLd(oficina)).replace(/</g, "\\u003c");
     <meta name="twitter:card" content={ogImagem ? "summary_large_image" : "summary"} />
 
     <script type="application/ld+json" set:html={jsonLd} />
+    {faqJson && <script type="application/ld+json" set:html={faqJson} />}
   </head>
   <body class="min-h-screen font-texto antialiased">
     <slot />

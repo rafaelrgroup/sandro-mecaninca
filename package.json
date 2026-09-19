@@ -25,14 +25,15 @@
     "testes": "npm run teste:afirmacoes-e-fotos && npm run teste:marca-render && npm run teste:marca-geometria && npm run teste:marca-geometria-mutacoes && npm run teste:fotos-tratamento"
   },
   "dependencies": {
-    "astro": "^7.3.3",
-    "astro-icon": "^1.2.0",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/barlow-condensed": "^5.3.0",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3",
-    "@fontsource/barlow-condensed": "^5.3.0",
-    "@fontsource-variable/inter": "^5.3.0",
-    "sharp": "^0.35.4"
+    "astro": "^7.3.3",
+    "astro-icon": "^1.2.0",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "opentype.js": "^2.0.0"

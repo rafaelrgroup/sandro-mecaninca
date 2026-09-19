@@ -25,24 +25,27 @@ const fatos = [
 ---
 
 <section id="inicio" data-hero data-superficie="grafite" aria-labelledby="hero-titulo" class="bg-grafite-950 text-off-white">
-  <Container class="pt-lg md:pt-2xl lg:pt-xl">
+  <!-- pb só até lg: com a estrada escondida no celular, a lista de fatos
+       encostava no pé da seção. A partir de lg a estrada encosta no pé
+       de propósito (DESENHO §5). -->
+  <Container class="pt-lg pb-lg md:pt-2xl lg:pt-xl lg:pb-0">
     <div class="grid gap-lg md:grid-cols-2 md:items-center md:gap-xl">
       <div data-hero-texto>
-        <p
-          class="entrada-hero flex flex-wrap items-center gap-x-xs font-display text-sm font-bold uppercase tracking-widest text-ambar-500 md:text-base"
-        >
-          <span class="entrada-barra h-px w-xl bg-ambar-500" aria-hidden="true"></span>
-          Oficina mecânica · {oficina.endereco.bairro} · {oficina.endereco.cidade}/{oficina.endereco.uf}
-        </p>
-
-        <h1
-          id="hero-titulo"
-          class="entrada-hero mt-sm text-4xl leading-none font-extrabold tracking-tight uppercase sm:text-5xl lg:text-6xl"
-          style="--ordem: 1"
-        >
-          {inicioTitulo}{" "}
-          <span class="whitespace-nowrap text-ambar-400" data-destaque>{destaqueTitulo}</span>{" "}
-          {restoTitulo.join(" ")}
+        <!-- A linha de contexto ("Oficina mecânica · bairro · cidade/UF")
+             faz parte do H1 (SEO local: a palavra-chave no heading
+             principal), estilizada como o eyebrow de antes. -->
+        <h1 id="hero-titulo" class="entrada-hero" style="--ordem: 1">
+          <span
+            class="flex flex-wrap items-center gap-x-xs font-display text-sm font-bold uppercase tracking-widest text-ambar-500 md:text-base"
+          >
+            <span class="entrada-barra h-px w-xl bg-ambar-500" aria-hidden="true"></span>
+            Oficina mecânica · {oficina.endereco.bairro} · {oficina.endereco.cidade}/{oficina.endereco.uf}
+          </span>
+          <span class="mt-sm block text-4xl leading-none font-extrabold tracking-tight uppercase sm:text-5xl lg:text-6xl">
+            {inicioTitulo}{" "}
+            <span class="whitespace-nowrap text-ambar-400" data-destaque>{destaqueTitulo}</span>{" "}
+            {restoTitulo.join(" ")}
+          </span>
         </h1>
 
         <p

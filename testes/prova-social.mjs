@@ -6,20 +6,20 @@
 // CONTRATO que PS2 (oficina.ts) e PS3 (ui/ProvaSocial.astro + Sobre) seguem:
 //   - src/data/oficina.ts: `FonteAfirmacao` ganha "google"; `interface
 //     Afirmacao` ganha `conferidaEm?: string` (data ISO AAAA-MM-DD, o mesmo
-//     nome de fotos.ts). Em `afirmacoes` entram EXATAMENTE cinco itens com
+//     nome de fotos.ts). Em `afirmacoes` entram EXATAMENTE três itens com
 //     `fonte: "google"`, cada um com `conferidaEm: "2026-09-19"` e `texto`
 //     em aspas duplas, igual byte a byte a perfil-google/ficha/ficha.json:
-//       "4,6"            (#L12, nota)
-//       "45 avaliações"  (#L13, total)
 //       os três trechos  (#L37-41, grafia do Google: "Ja trabalho a anos
 //                         com o Sandro,ótimo profissional e preços justos.")
+//     Nota ("4,6") e total ("45 avaliações") ficam FORA da lista e da
+//     página inteira, por decisão do dono (2026-09-19).
 //     A chave de cada item é livre. Nenhum outro item repete esses textos.
 //   - oficina.linkGoogle = LINK_GOOGLE (abaixo): place_id, sem
 //     google.com/maps/search e sem endereço (testes/mutacao-endereco.mjs
 //     #L192-195 trata todo href com maps/search como "Como chegar" e
 //     #L286-299 varre o dist atrás do endereço antigo).
 //   - Na página, UM elemento `[data-prova-social]` que só existe quando há
-//     item "google" na lista E linkGoogle preenchido. Dentro dele: os cinco
+//     item "google" na lista E linkGoogle preenchido. Dentro dele: os três
 //     textos lidos da lista (nada à mão), a data de conferência VISÍVEL
 //     (19/09/2026, 19.09.2026, 19 de setembro de 2026 ou 2026-09-19) e a
 //     atribuição como LINK DE TEXTO (não Botao) para linkGoogle, com
@@ -39,7 +39,7 @@
 //     sobram só ROTULOS e há "Google"; autores e trechos das avaliações de
 //     ficha.json#L52-74 fora do dist inteiro; proibidos do desenho fora do
 //     dist inteiro; nada de estrela (★, "estrela", ícone *star*).
-//   d 4,6, 45, "avaliações" e a data de conferência SÓ dentro do componente.
+//   d 4,6 e 45 em lugar NENHUM; "avaliações" e a data SÓ no componente.
 //   e JSON-LD: sem review/aggregateRating/rating e sameAs = [linkGoogle].
 //   f UM Botao para o Google, dentro de #localizacao; no componente, link
 //     de texto para o MESMO linkGoogle; nenhum outro link para ele.
@@ -64,6 +64,9 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const LINK_GOOGLE = "https://www.google.com/maps/place/?q=place_id:ChIJYbFoyA8_GZURSSrKItDfN44";
 const DATA_CONFERENCIA = "2026-09-19";
+// Nota e total FORA da página por decisão do dono (2026-09-19): só os
+// trechos positivos entram em afirmacoes e no componente. As constantes
+// ficam para as provas de ausência (parte d).
 const NOTA = "4,6";
 const TOTAL = "45 avaliações";
 const TRECHOS = [
@@ -71,7 +74,7 @@ const TRECHOS = [
   "Ótimo atendimento, rápidos, precisos, honestos e bom preço de Mão de Obra.",
   "Muito bom o serviço feito no meu carro estão de parabéns.",
 ];
-const TEXTOS_GOOGLE = [NOTA, TOTAL, ...TRECHOS];
+const TEXTOS_GOOGLE = [...TRECHOS];
 // Formas visíveis aceitas da data (g) e procuradas fora do componente (d).
 const DATA_VISIVEL = /\b19\/09\/2026\b|\b19\.09\.2026\b|\b19 de setembro de 2026\b|\b2026-09-19\b/i;
 const DATA_QUALQUER = /19\/09\/2026|19\.09\.2026|19 de setembro de 2026|2026-09-19|setembro de 2026/i;
@@ -266,7 +269,11 @@ function acharFicha() {
   const achado = candidatos.find((c) => existsSync(c));
   if (!achado) throw new ErroDeMontagem(`ficha.json não encontrada em ${candidatos.join(", ")} (use --ficha)`);
   const ficha = JSON.parse(readFileSync(achado, "utf8"));
-  const daFicha = [ficha.nota, ficha.total_avaliacoes, ...(ficha.trechos_resumo_avaliacoes ?? [])];
+  // Nota e total da ficha só conferem as constantes (provas de ausência);
+  // na lista e no componente entram apenas os trechos.
+  if (ficha.nota !== NOTA || ficha.total_avaliacoes !== TOTAL)
+    throw new ErroDeMontagem(`ficha.json (${achado}): nota/total (${ficha.nota}, ${ficha.total_avaliacoes}) divergem das constantes deste teste`);
+  const daFicha = [...(ficha.trechos_resumo_avaliacoes ?? [])];
   if (JSON.stringify(daFicha) !== JSON.stringify(TEXTOS_GOOGLE))
     throw new ErroDeMontagem(`ficha.json (${achado}) diverge das constantes deste teste: ${JSON.stringify(daFicha)}`);
   if (!String(ficha.capturado_em).startsWith(DATA_CONFERENCIA))
@@ -331,7 +338,7 @@ async function parteA(dados) {
   const faltam = TEXTOS_GOOGLE.filter((t) => !textos.includes(t));
   const sobram = google.filter(([, a]) => !TEXTOS_GOOGLE.includes(a.texto));
   if (google.length !== TEXTOS_GOOGLE.length)
-    falhas.push(`literal: ${google.length} itens com fonte "google" em afirmacoes; o contrato pede ${TEXTOS_GOOGLE.length} (nota, total e 3 trechos)`);
+    falhas.push(`literal: ${google.length} itens com fonte "google" em afirmacoes; o contrato pede ${TEXTOS_GOOGLE.length} (só os 3 trechos; nota e total fora, decisão do dono)`);
   for (const t of faltam) falhas.push(`literal: falta item "google" com texto byte a byte ${JSON.stringify(t)} (ficha.json)`);
   for (const [k, a] of sobram) falhas.push(`literal: afirmacoes.${k} (fonte "google") não está na ficha: ${JSON.stringify(a.texto)}`);
   for (const t of new Set(textos)) if (textos.filter((x) => x === t).length > 1) falhas.push(`literal: texto repetido em itens "google": ${JSON.stringify(t)}`);
@@ -397,10 +404,12 @@ function parteReferencia(html, dist, ficha, tokensBotao) {
     for (const [re, rotulo] of PROIBIDOS) if (re.test(legivel)) falhas.push(`proibido do desenho em dist/${rel}: ${rotulo}`);
   }
 
-  // --- d números e "avaliações" só no componente
+  // --- d nota e total em lugar NENHUM (decisão do dono, 2026-09-19);
+  //     "avaliações" e a data só no componente
+  const lidoTudo = lidoDe(html);
+  if (/(?<!\d)4,6(?!\d)/.test(lidoTudo)) falhas.push('nota "4,6" aparece na página (fora por decisão do dono)');
+  if (/(?<![\d.,])45(?![\d])/.test(lidoTudo)) falhas.push('total "45" aparece na página (fora por decisão do dono)');
   const lidoFora = lidoDe(fora);
-  if (/(?<!\d)4,6(?!\d)/.test(lidoFora)) falhas.push('fora do componente: "4,6" aparece');
-  if (/(?<![\d.,])45(?![\d])/.test(lidoFora)) falhas.push('fora do componente: "45" aparece');
   if (/(?<![\p{L}])avaliações(?![\p{L}])/iu.test(lidoFora)) falhas.push('fora do componente: "avaliações" aparece');
   if (DATA_QUALQUER.test(lidoFora)) falhas.push("fora do componente: a data de conferência aparece");
 

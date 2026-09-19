@@ -15,12 +15,13 @@ import BarraFixa from "@/components/secoes/BarraFixa.astro";
 
 const { endereco } = oficina;
 const titulo = `${oficina.nome} — Oficina mecânica em ${endereco.cidade}/${endereco.uf}`;
-// Serviços citados na description vêm da lista de oficina.ts (os 5 primeiros).
+// Serviços citados na description vêm da lista de oficina.ts (os 2
+// primeiros: o Google corta a description em ~155 caracteres).
 const servicosCitados = oficina.servicos
-  .slice(0, 5)
+  .slice(0, 2)
   .map((s, i) => (i === 0 ? s.nome : s.nome.toLowerCase()))
   .join(", ");
-const descricao = `Oficina mecânica no bairro ${endereco.bairro}, em ${endereco.cidade}/${endereco.uf}, desde ${oficina.desdeAno}. ${servicosCitados} e mais. ${afirmacoes.orcamentoAntes.texto}, direto pelo WhatsApp.`;
+const descricao = `Oficina mecânica no bairro ${endereco.bairro}, em ${endereco.cidade}/${endereco.uf}. ${afirmacoes.orcamentoAntes.texto}, pelo WhatsApp. ${servicosCitados} e mais.`;
 ---
 
 <Base titulo={titulo} descricao={descricao}>

@@ -57,6 +57,31 @@ export function gerarJsonLd(oficina: Oficina): Record<string, unknown> {
   if (oficina.linkGoogle.trim()) {
     dados.sameAs = [oficina.linkGoogle.trim()];
   }
+  if (oficina.turnosSemana.length > 0) {
+    dados.openingHoursSpecification = oficina.turnosSemana.map((turno) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: turno.abre,
+      closes: turno.fecha,
+    }));
+  }
 
   return dados;
+}
+
+/**
+ * FAQPage schema.org com as mesmas perguntas da seção Dúvidas
+ * (oficina.faq, fonte única). Null quando não há perguntas.
+ */
+export function gerarFaqJsonLd(oficina: Oficina): Record<string, unknown> | null {
+  if (oficina.faq.length === 0) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: oficina.faq.map((item) => ({
+      "@type": "Question",
+      name: item.pergunta,
+      acceptedAnswer: { "@type": "Answer", text: item.resposta },
+    })),
+  };
 }
