@@ -1,0 +1,86 @@
+---
+import CabecalhoSecao from "@/components/ui/CabecalhoSecao.astro";
+import Container from "@/components/ui/Container.astro";
+import Icone from "@/components/ui/Icone.astro";
+import oficina, { afirmacoes } from "@/data/oficina";
+
+// Passos vêm de oficina.ts, sem ícone de passo (DESENHO §4.5): o número
+// no marco é o único sinal. O destino, no fim da estrada, traz as duas
+// afirmações que eram de Diferenciais, lidas da lista tipada.
+const passos = oficina.passos;
+// O número de passos sai da mesma lista: o subtítulo, as colunas da
+// estrada (uma por passo, pelo fluxo em coluna) e o preenchimento
+// (--passos em global.css) não fixam 4.
+const EXTENSO = ["Zero", "Um", "Dois", "Três", "Quatro", "Cinco", "Seis", "Sete", "Oito", "Nove", "Dez"];
+const qtd = passos.length;
+const quantos = `${EXTENSO[qtd] ?? qtd} ${qtd === 1 ? "passo" : "passos"}`;
+const destino = [afirmacoes.diagnosticoQuandoNaoObvio.texto, afirmacoes.orcamentoAprovado.texto];
+---
+
+<section id="como-funciona" aria-labelledby="como-funciona-titulo" class="py-3xl md:py-4xl">
+  <Container>
+    <div data-reveal>
+      <CabecalhoSecao
+        variante="placa"
+        idTitulo="como-funciona-titulo"
+        eyebrow="Como funciona"
+        titulo="Do primeiro contato ao carro pronto"
+        subtitulo={`${quantos}, sem surpresa no meio do caminho.`}
+      />
+    </div>
+
+    <!-- A estrada: um trecho por passo, sem espaço entre eles, para a
+         faixa ser contínua. --progresso (0–1) vem de src/scripts/estrada.ts;
+         sem JS / movimento reduzido fica 1 (estrada cheia).
+         Até o tablet a estrada é vertical (lista); uma coluna por passo só a partir
+         de lg, onde cada passo tem largura para o título numa linha. -->
+    <ol
+      class="estrada mt-xl grid md:mt-2xl lg:auto-cols-fr lg:grid-flow-col"
+      style={`--passos: ${qtd}`}
+      data-estrada
+    >
+      {
+        passos.map((passo, i) => (
+          <li class="relative flex gap-md lg:block" style={`--i: ${i}`}>
+            <div class="relative flex flex-col items-center lg:flex-row lg:items-center">
+              <span
+                class="estrada-marco relative z-10 inline-flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-ambar-500 bg-ambar-500 font-display text-xl font-extrabold text-grafite-950 lg:size-14 lg:text-2xl"
+                data-marco
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <span
+                class="estrada-trecho relative -mt-3xs w-md flex-1 overflow-hidden lg:mt-0 lg:-ml-3xs lg:h-md lg:w-auto"
+                aria-hidden="true"
+              >
+                <span class="estrada-preenchimento absolute inset-0" />
+                <span class="estrada-faixa absolute inset-y-0 left-1/2 w-3xs -translate-x-1/2 lg:inset-x-0 lg:top-1/2 lg:left-0 lg:h-3xs lg:w-auto lg:-translate-y-1/2 lg:translate-x-0" />
+              </span>
+            </div>
+            <div class="min-w-0 max-w-texto pb-xl lg:pt-md lg:pr-lg lg:pb-0">
+              <h3 class="text-2xl leading-tight font-bold uppercase text-grafite-950">
+                <span class="sr-only">Passo {i + 1}: </span>
+                {passo.titulo}
+              </h3>
+              <p class="mt-2xs leading-relaxed text-grafite-500">{passo.texto}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <!-- Destino: onde a estrada termina, com o pino. Até lg (estrada
+         vertical) encosta no fim do último trecho, sem vão; a partir de lg
+         (estrada horizontal) fica abaixo da fileira de passos. -->
+    <div data-destino data-superficie="grafite" class="recorte-chanfro flex gap-md bg-grafite-950 p-md text-off-white lg:mt-xl lg:p-lg">
+      <Icone nome="mdi:map-marker" class="size-alvo shrink-0 text-ambar-500" />
+      <ul class="grid gap-xs lg:grid-cols-2 lg:gap-xl" role="list">
+        {destino.map((texto) => <li class="text-lg leading-relaxed text-pretty">{texto}</li>)}
+      </ul>
+    </div>
+  </Container>
+</section>
+<script>
+  import "@/scripts/estrada";
+</script>

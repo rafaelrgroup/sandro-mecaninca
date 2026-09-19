@@ -1,0 +1,55 @@
+---
+import Botao from "@/components/ui/Botao.astro";
+import Container from "@/components/ui/Container.astro";
+import Marca from "@/components/ui/Marca.astro";
+import oficina from "@/data/oficina";
+import { tel, whatsappGeral } from "@/lib/links";
+
+// DESENHO §4 item 1: <768 rola com a página (o cromo fixo do celular é só a
+// BarraFixa); 768+ sticky com WhatsApp e Ligar; 1024+ mais 3 âncoras. O
+// telefone aparece uma vez, no texto do Ligar.
+const ancoras = [
+  { href: "#servicos", texto: "Serviços" },
+  { href: "#como-funciona", texto: "Como funciona" },
+  { href: "#localizacao", texto: "Localização" },
+];
+---
+
+<header class="z-40 border-b border-grafite-100 bg-off-white md:sticky md:top-0">
+  <Container class="flex h-2xl items-center justify-between gap-md">
+    <a href="#inicio" class="inline-flex min-h-alvo shrink-0 items-center rounded-sm">
+      <Marca />
+    </a>
+    <nav aria-label="Seções" class="hidden lg:block">
+      <ul class="flex items-center gap-2xs">
+        {
+          ancoras.map((a) => (
+            <li>
+              <a
+                href={a.href}
+                class="inline-flex min-h-alvo items-center rounded-sm px-2xs text-sm font-medium text-grafite-800 transition-colors duration-rapida ease-padrao hover:text-ambar-700"
+              >
+                {a.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="hidden items-center gap-2xs md:flex">
+      <Botao
+        href={whatsappGeral()}
+        variante="whatsapp"
+        tom="claro"
+        tamanho="sm"
+        icone="mdi:whatsapp"
+        target="_blank"
+      >
+        WhatsApp
+      </Botao>
+      <Botao href={tel} variante="contorno" tom="claro" tamanho="sm" icone="mdi:phone">
+        Ligar <span class="tabular-nums">{oficina.telefone}</span>
+      </Botao>
+    </div>
+  </Container>
+</header>

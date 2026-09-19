@@ -1,0 +1,12 @@
+# C1 vermelho: versao ATUAL de testes/mutacao-endereco.mjs contra COPIA de .snapshots/pre-P0/sandro-mecanica
+# sha256 testes/mutacao-endereco.mjs = 18cd000347a9d07651fd85cf303efec1643b02b4e7afc5f10154bdcddcbba7a6
+# data: 2026-09-19T03:29:21-03:00  node v22.12.0
+# comando: node mutacao-endereco.mjs <copia-pre-P0>
+mutado: logradouro "Rua Pedro Apolo dos Santos, 66", bairro "São Luiz", cep "93806-534" → sentinelas
+FALHOU (3):
+  - valor antigo em dist/index.html: "pedro%20apolo", "apolo%20dos%20santos", "s%c3%a3o%20luiz", "93806"
+  - link "Como chegar": sem a sentinela SentinelaLogradouroQx7, SentinelaBairroQx7, SentinelaCepQx7
+  - link do Waze: sem a sentinela SentinelaLogradouroQx7, SentinelaBairroQx7, SentinelaCepQx7
+oficina.ts restaurado (bytes idênticos).
+build de restauração ok.
+# exit=1

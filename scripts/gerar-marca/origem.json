@@ -1,0 +1,615 @@
+{
+ "_leia": "Origem de cada parte da marca do letreiro (P4 MC1). Consumido por src/lib/marca.js (bloco MARCA DO LETREIRO). Coordenadas em px da foto original e do recorte de perfil-google/logo-ref/ (recortes.json). A foto 10 (de cliente) foi so conferencia de cor e proporcao; nada dela e publicado.",
+ "unidade": "altura das maiusculas de SANDRO = 100 (233 px no recorte ampliado 3x; nivelado 1,51 graus, cisalhamento 4,5% desfeito)",
+ "medicao": {
+  "rotacao_graus": 1.51,
+  "cisalhamento": 0.045,
+  "refs": [
+   "perfil-google/logo-ref/recortes.json"
+  ],
+  "conferencia_sem_publicar": {
+   "foto": "perfil-google/fotos/10.jpg",
+   "sha256_foto": "4f25d77fc226b4ad1a9b2c2ec62e012fcab0e55a429c6a6fb0fa77a2c0cc97d0",
+   "uso": "razao de tamanho MECANICA/SANDRO (0,47) e cor"
+  }
+ },
+ "partes": [
+  {
+   "parte": "sandro-S",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2113,
+    1143,
+    2175,
+    1222
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    100,
+    100,
+    285,
+    337
+   ],
+   "leitura": "quadrado, rotacionalmente simetrico; hastes 15, barras 22,5; terminais retos (topo acaba em 74, base comeca em 4); cantos externos r16/r18"
+  },
+  {
+   "parte": "sandro-A",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2186,
+    1147,
+    2250,
+    1225
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    317,
+    110,
+    511,
+    344
+   ],
+   "leitura": "topo com os dois cantos arredondados r22; travessa (y 46-68) presa so na perna direita, solta da esquerda (vao 15,5-26,5)"
+  },
+  {
+   "parte": "sandro-N",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2259,
+    1149,
+    2315,
+    1227
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    537,
+    117,
+    706,
+    350
+   ],
+   "leitura": "cantos vivos; diagonal com bordas paralelas (15,5,0)-(53,5,62) e (15,5,34)-(53,5,95)"
+  },
+  {
+   "parte": "sandro-D",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2324,
+    1151,
+    2381,
+    1228
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    732,
+    124,
+    904,
+    354
+   ],
+   "leitura": "haste esquerda so a partir de y 39 (vao aberto sob a barra do topo); canto sup. direito r30, inf. direito r15"
+  },
+  {
+   "parte": "sandro-R",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2391,
+    1152,
+    2454,
+    1230
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    932,
+    127,
+    1121,
+    359
+   ],
+   "leitura": "bojo com canto r22; barra do bojo solta da haste (como no A); perna reta continua a borda esquerda da barra"
+  },
+  {
+   "parte": "sandro-fenda (A e R)",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2186,
+    1147,
+    2454,
+    1230
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    317,
+    110,
+    1121,
+    359
+   ],
+   "leitura": "risco fino na haste esquerda do A (17,4,0)-(5,4,74) e do R (8,7,0)-(2,5,65); visivel na 01 e na 08",
+   "duvida": "pode ser emenda fisica do acrilico; mantido por aparecer igual nas duas letras e nas duas fotos",
+   "estado": "RETIRADA na MC1b (2026-09-19) por ordem do portao MC2 (andamento/MC2.md): nao entra em marca.js nem em nenhum SVG",
+   "correcao_2026-09-19": "A leitura acima ('visivel na 01 e na 08') e FALSA quanto a 08 e fica aqui so como historia. Corrigida em 2026-09-19: na 08 (noite) o risco nao aparece no A nem no R, nem com contraste forcado (portao MC2, achado b). Na 01 le escuro; na 10, no mesmo lugar, le CLARO; so o A e o R tem, o N nao. Por isso e emenda ou defeito fisico da face do acrilico, nao desenho, e saiu (achado a)."
+  },
+  {
+   "parte": "mostrador-anel",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2463,
+    1152,
+    2537,
+    1233
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    1150,
+    125,
+    1370,
+    370
+   ],
+   "leitura": "C amarelo R 42,5 / r 21,5; corte direito horizontal em y+3,5, corte esquerdo em y+25,5 com borda interna reta",
+   "leitura_MC1b_2026-09-19": "braco esquerdo: a borda interna sobe do furo (-21,5, 0) ate a ponta na circunferencia externa em y+25,5 num arco tangente ao furo (raio 32,26, centro no eixo x). Acaba em ponta, como na 01 e na 10. Antes (MC1) era corte horizontal + borda interna reta vertical, com canto reto (portao MC2, achado e)"
+  },
+  {
+   "parte": "mostrador-bisel",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2463,
+    1152,
+    2537,
+    1233
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    1150,
+    125,
+    1370,
+    370
+   ],
+   "leitura": "prata clara: arco externo centro (-2, 9,5) R44, filete externo ao anel a esquerda, borda interna centro (-14,4) R34",
+   "leitura_MC1b_2026-09-19": "filete AMARELO fino (traco 2,5 centrado) na borda de fora do bisel e da cunha e na base da cunha, visivel nas fotos 01 e 10; no SVG da MC1 essa borda era o contorno marrom (portao MC2, achado d). Parte do SVG: mostrador-filete"
+  },
+  {
+   "parte": "mostrador-zona-escura",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2463,
+    1152,
+    2537,
+    1233
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    1150,
+    125,
+    1370,
+    370
+   ],
+   "leitura": "cunha prata escura a direita da divisa a 56 graus, base em y+10",
+   "leitura_MC1b_2026-09-19": "a base (y+10) e a borda de fora levam o filete amarelo (ver mostrador-bisel)"
+  },
+  {
+   "parte": "mostrador-ponteiro",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2463,
+    1152,
+    2537,
+    1233
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    1150,
+    125,
+    1370,
+    370
+   ],
+   "leitura": "vermelho, 59 graus, sai do cubo e passa por cima do bisel",
+   "leitura_MC1b_2026-09-19": "largura media 7,6 (meia-base 4,8, meia-ponta 2,8) = ~1/11 do diametro do anel (85), como na foto 01. Na MC1 era 3,6 (~1/19) (portao MC2, achado c). Tambem e o que o faz ler a 32 e 48 px"
+  },
+  {
+   "parte": "mostrador-cubo",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2463,
+    1152,
+    2537,
+    1233
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    1150,
+    125,
+    1370,
+    370
+   ],
+   "leitura": "circulo prata r 3,6 em (-4,3, 6,4) do centro do anel"
+  },
+  {
+   "parte": "contorno",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    2113,
+    1143,
+    2537,
+    1233
+   ],
+   "recorte": "perfil-google/logo-ref/simbolo-sandro-foto01-ampliado-3x.png",
+   "sha256_recorte": "65bfba04d9935a315af3ac4cf7318f2e9c6fedb243719cb7f0bb2285d3770dcd",
+   "caixa_no_recorte_px": [
+    100,
+    100,
+    1370,
+    370
+   ],
+   "leitura": "borda escura em volta das letras e do mostrador; traco 5 (2,5 para fora da face)",
+   "leitura_MC1b_2026-09-19": "na 01 a borda e grossa a esquerda e embaixo e fio no topo e a direita; MECANICA tem a mesma borda; na 08 (noite) nao aparece. Desenho novo: fio de 1 para fora em volta de toda face + a propria face deslocada (-3, +3); com o fio, a borda da 4 a esquerda e embaixo, a espessura lida na sobreposicao da 01, em SANDRO, no mostrador e em MECANICA",
+   "interpretacao": "INTERPRETACAO declarada (portao MC2, achado f). Le-se como a lateral/sombra do letreiro em relevo, que so aparece com a luz do dia (na 08 a face iluminada por dentro apaga a lateral). A marca segue a leitura de dia (a mesma das cores) e traz a borda nas duas palavras e no mostrador. O deslocamento fixo aproxima a borda desigual da 01, mas nao a mede ponto a ponto. Razao para manter: e o que separa as faces do painel na fachada de dia"
+  },
+  {
+   "parte": "mecanica-M",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1592,
+    1152,
+    1648,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    192,
+    172,
+    248,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)",
+   "leitura_MC1b_2026-09-19": "hastes afinadas (M 23->21 e 34->36; E 38->34; N 25->22 e 28->25; I 38->36, em unidades de MECANICA); miolos do E (16->18 de altura) e do N mais abertos, como na foto 01 (portao MC2, achado g). Razao de altura 0,50 mantida (foto 0,51)"
+  },
+  {
+   "parte": "mecanica-E",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1654,
+    1152,
+    1690,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    254,
+    172,
+    290,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)",
+   "leitura_MC1b_2026-09-19": "hastes afinadas (M 23->21 e 34->36; E 38->34; N 25->22 e 28->25; I 38->36, em unidades de MECANICA); miolos do E (16->18 de altura) e do N mais abertos, como na foto 01 (portao MC2, achado g). Razao de altura 0,50 mantida (foto 0,51)"
+  },
+  {
+   "parte": "mecanica-C1",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1697,
+    1152,
+    1734,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    297,
+    172,
+    334,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)"
+  },
+  {
+   "parte": "mecanica-Â",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1741,
+    1138,
+    1781,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    341,
+    158,
+    381,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)"
+  },
+  {
+   "parte": "mecanica-N",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1788,
+    1152,
+    1829,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    388,
+    172,
+    429,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)",
+   "leitura_MC1b_2026-09-19": "hastes afinadas (M 23->21 e 34->36; E 38->34; N 25->22 e 28->25; I 38->36, em unidades de MECANICA); miolos do E (16->18 de altura) e do N mais abertos, como na foto 01 (portao MC2, achado g). Razao de altura 0,50 mantida (foto 0,51)"
+  },
+  {
+   "parte": "mecanica-I",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1836,
+    1152,
+    1858,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    436,
+    172,
+    458,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)",
+   "leitura_MC1b_2026-09-19": "hastes afinadas (M 23->21 e 34->36; E 38->34; N 25->22 e 28->25; I 38->36, em unidades de MECANICA); miolos do E (16->18 de altura) e do N mais abertos, como na foto 01 (portao MC2, achado g). Razao de altura 0,50 mantida (foto 0,51)"
+  },
+  {
+   "parte": "mecanica-C2",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1862,
+    1152,
+    1898,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    462,
+    172,
+    498,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)"
+  },
+  {
+   "parte": "mecanica-A",
+   "foto": "perfil-google/fotos/01.jpg",
+   "sha256_foto": "e3a2ed256ed8b3e970630442d220ca4d11bc23cf1342023e2cbcee3397997935",
+   "caixa_na_foto_px": [
+    1904,
+    1152,
+    1942,
+    1192
+   ],
+   "recorte": "perfil-google/logo-ref/letreiro-foto01-nativo.png",
+   "sha256_recorte": "8df42e98c8a1ca8b2dee047e87a175895e9b29d479d8de9ac179dd3032a29b98",
+   "caixa_no_recorte_px": [
+    504,
+    172,
+    542,
+    212
+   ],
+   "leitura": "serifada pesada com colchetes curvos; desenhada na unidade propria (maiuscula 100), reduzida a 0,5 de SANDRO (razao lida na 01 e na 10)"
+  }
+ ],
+ "cores": {
+  "amarelo": {
+   "token": "--color-marca-amarelo",
+   "valor": "#fae005",
+   "amostras": [
+    {
+     "foto": "01",
+     "caixa_na_foto_px": [
+      2080,
+      1140,
+      2440,
+      1230
+     ],
+     "mediana": "#fcde06"
+    },
+    {
+     "foto": "08",
+     "caixa_na_foto_px": [
+      1898,
+      786,
+      2675,
+      947
+     ],
+     "mediana": "#f7e103"
+    }
+   ],
+   "compensacao": "media dia/noite: as duas concordam (saturacao 0,98); a 10 (#fde713) confere"
+  },
+  "vermelho": {
+   "token": "--color-marca-vermelho",
+   "valor": "#d4353b",
+   "amostras": [
+    {
+     "foto": "01",
+     "caixa_na_foto_px": [
+      1590,
+      1150,
+      1945,
+      1205
+     ],
+     "mediana": "#d4353b",
+     "hsv": [
+      357.7,
+      0.75,
+      0.831
+     ]
+    },
+    {
+     "foto": "08",
+     "caixa_na_foto_px": [
+      807,
+      839,
+      1523,
+      926
+     ],
+     "mediana": "#9a1606",
+     "hsv": [
+      6.5,
+      0.961,
+      0.604
+     ]
+    }
+   ],
+   "compensacao": "matiz e valor do DIA (01 e 10 concordam: 357,6 graus, V 0,831); a noite puxa o matiz para laranja (luz quente) e subexpoe; saturacao 0,855 = meio entre o dia (lavado pelo reflexo do ceu no acrilico) e a noite. Mesmo vermelho no ponteiro (na 01 o ponteiro le (221,131,122) sob reflexo, mesmo matiz)",
+   "valor_MC1": "#d41f26",
+   "correcao_2026-09-19": "MC1b: conferido contra as amostras de dia (01 #d4353b/#d5353b; 10 #d64147). O #d41f26 (saturacao 0,855, meio entre o dia e a noite) lia mais saturado que o dia (portao MC2, achado h). Passa a ser a mediana do dia na 01 (matiz 357,7, S 0,75, V 0,831): a noite (08) sai do calculo porque a luz quente desloca o matiz e subexpoe. Contraste sobre o painel grafite-950: 3,77:1 (era 3,47)"
+  },
+  "prata": {
+   "token": "--color-marca-prata",
+   "valor": "#b5b3b5",
+   "amostras": [
+    {
+     "foto": "01",
+     "caixa_na_foto_px": [
+      2460,
+      1150,
+      2560,
+      1250
+     ],
+     "mediana_clara": "#b5afb2"
+    },
+    {
+     "foto": "08",
+     "caixa_na_foto_px": [
+      2701,
+      769,
+      2875,
+      952
+     ],
+     "mediana": "#a5a3a5"
+    }
+   ],
+   "compensacao": "valor do dia (parte clara, V>0,66); matiz neutro da noite (o rosa do dia e reflexo)"
+  },
+  "prata-escura": {
+   "token": "--color-marca-prata-escura",
+   "valor": "#777577",
+   "amostras": [
+    {
+     "foto": "01",
+     "caixa_na_foto_px": [
+      2460,
+      1150,
+      2560,
+      1250
+     ],
+     "mediana_escura": "#7a7277"
+    }
+   ],
+   "compensacao": "mesma neutralizacao do prata"
+  },
+  "contorno": {
+   "token": "--color-marca-contorno",
+   "valor": "#4a3520",
+   "amostras": [
+    {
+     "foto": "01",
+     "caixa_na_foto_px": [
+      2080,
+      1140,
+      2440,
+      1235
+     ],
+     "criterio": "matiz 7-47 graus, S>0,35, V 0,12-0,55 (borda das letras)",
+     "mediana": "#4a3520"
+    }
+   ],
+   "compensacao": "sem compensacao (so aparece de dia). MC1b: agora tambem em MECANICA; forma e razao em partes[contorno].interpretacao"
+  },
+  "painel": {
+   "token": "--color-grafite-950 (JA EXISTIA, reusado)",
+   "valor": "#14161a",
+   "amostras": [
+    {
+     "foto": "01",
+     "caixa_na_foto_px": [
+      1500,
+      1250,
+      1900,
+      1290
+     ],
+     "mediana": "#333438"
+    },
+    {
+     "foto": "08",
+     "caixa_na_foto_px": [
+      869,
+      978,
+      1741,
+      1083
+     ],
+     "mediana": "#030206"
+    }
+   ],
+   "compensacao": "preto fosco: o dia soma reflexo (#333438), a noite subexpoe (#030206); grafite-950 cai entre os dois, por isso nao se criou token novo"
+  }
+ },
+ "nao_vem_do_letreiro": [
+  {
+   "parte": "vao MECANICA-SANDRO (48 unidades)",
+   "origem": "NAO VEM DO LETREIRO",
+   "razao": "no letreiro o vao e ~212 unidades porque o painel tem a largura da fachada e divide espaco com os telefones; na marca o vao foi reduzido a ~1 maiuscula de MECANICA. Ordem, alinhamento vertical (MECANICA centrada na altura de SANDRO, com a 01 nivelada) e razao de tamanho 0,5 vem do letreiro"
+  },
+  {
+   "parte": "margem do painel (24 unidades em volta)",
+   "origem": "NAO VEM DO LETREIRO",
+   "razao": "o painel real tem ~3,3 maiusculas de altura com as luminarias; margem de marca escolhida para a assinatura caber em 32-72 px"
+  },
+  {
+   "parte": "forma do selo (poligono chanfrado de SELO.poligono, lado 160)",
+   "origem": "NAO VEM DO LETREIRO",
+   "razao": "e o chanfro do sistema do site (selo, moldura e painel usam chanfro); o conteudo do selo (mostrador sobre o painel preto) vem do letreiro"
+  },
+  {
+   "parte": "telefones (98138.5899 e 99710.2520)",
+   "origem": "EXCLUIDO",
+   "razao": "ordem do dono: telefones nao entram na marca; tambem ficam fora dos recortes da prancha"
+  }
+ ],
+ "buracos": {
+  "1_selo": "O SELO passa a ser o MOSTRADOR (o O de SANDRO: anel amarelo, bisel prata, ponteiro vermelho, cubo) sobre o painel grafite-950, no poligono chanfrado do SELO atual (seloLetreiroSvg). Razao: e o unico elemento do letreiro que funciona sozinho e em quadrado; o S isolado viraria outro S-chave inventado. Sobre ambar (CtaFinal) o painel da 7,2:1 contra o fundo.",
+  "2_painel_nos_dois_tons": "O painel preto E PARTE DA MARCA nos dois tons (letreiroSvg desenha o retangulo por padrao). Tom claro: painel x off-white 16,6:1 e as partes ficam sobre o painel. Tom escuro: painel = grafite-950 = fundo, funde-se e as partes ficam sobre o mesmo preto. Em ambos: amarelo 13,6, vermelho 3,5, prata 8,7, prata-escura 4,0 (>= 3:1). Sem painel no claro o amarelo daria 1,23:1 e o prata 1,91:1 — por isso o painel nao e opcional no claro.",
+  "3_descritor": "MECANICA E descritor separavel: no letreiro e peca fisica a parte (outra cor, outro desenho de letra, longe de SANDRO). Regra mantida: < 40 px (xs) vai sem descritor = SANDRO com o mostrador no painel (LETREIRO_VIEWBOX_SEM_DESCRITOR)."
+ }
+}

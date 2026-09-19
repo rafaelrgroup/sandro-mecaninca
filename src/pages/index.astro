@@ -1,0 +1,49 @@
+---
+import Base from "@/layouts/Base.astro";
+import oficina, { afirmacoes } from "@/data/oficina";
+import Cabecalho from "@/components/secoes/Cabecalho.astro";
+import Hero from "@/components/secoes/Hero.astro";
+import PainelSintomas from "@/components/secoes/PainelSintomas.astro";
+import Servicos from "@/components/secoes/Servicos.astro";
+import ComoFunciona from "@/components/secoes/ComoFunciona.astro";
+import Sobre from "@/components/secoes/Sobre.astro";
+import Faq from "@/components/secoes/Faq.astro";
+import Localizacao from "@/components/secoes/Localizacao.astro";
+import CtaFinal from "@/components/secoes/CtaFinal.astro";
+import Rodape from "@/components/secoes/Rodape.astro";
+import BarraFixa from "@/components/secoes/BarraFixa.astro";
+
+const { endereco } = oficina;
+const titulo = `${oficina.nome} — Oficina mecânica em ${endereco.cidade}/${endereco.uf}`;
+// Serviços citados na description vêm da lista de oficina.ts (os 5 primeiros).
+const servicosCitados = oficina.servicos
+  .slice(0, 5)
+  .map((s, i) => (i === 0 ? s.nome : s.nome.toLowerCase()))
+  .join(", ");
+const descricao = `Oficina mecânica no bairro ${endereco.bairro}, em ${endereco.cidade}/${endereco.uf}, desde ${oficina.desdeAno}. ${servicosCitados} e mais. ${afirmacoes.orcamentoAntes.texto}, direto pelo WhatsApp.`;
+---
+
+<Base titulo={titulo} descricao={descricao}>
+  <a
+    href="#conteudo"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-sm focus:left-sm focus:z-50 focus:rounded-sm focus:bg-grafite-950 focus:px-md focus:py-xs focus:text-off-white"
+  >
+    Pular para o conteúdo
+  </a>
+  <Cabecalho />
+  <main id="conteudo">
+    <Hero />
+    <PainelSintomas />
+    <Servicos />
+    <ComoFunciona />
+    <Sobre />
+    <Faq />
+    <Localizacao />
+    <CtaFinal />
+  </main>
+  <Rodape />
+  <BarraFixa />
+  <script>
+    import "@/scripts/reveal";
+  </script>
+</Base>

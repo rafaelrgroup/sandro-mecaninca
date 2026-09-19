@@ -1,0 +1,101 @@
+---
+import Container from "@/components/ui/Container.astro";
+import Icone from "@/components/ui/Icone.astro";
+import Marca from "@/components/ui/Marca.astro";
+import oficina from "@/data/oficina";
+import { fotos } from "@/data/fotos";
+import { tel, whatsappGeral } from "@/lib/links";
+
+const { endereco } = oficina;
+const ano = new Date().getFullYear();
+
+// Créditos gerados do manifesto (src/data/fotos.ts), num <details>
+// fechado; foto real da oficina (banco null) não leva crédito de banco.
+// "desde {ano}" aparece uma vez só, na linha sob a marca (72 px, "lg").
+const creditos = fotos
+  .filter((f) => f.origem === "banco" && f.banco)
+  .map((f) => ({ autor: f.autor, url: f.url, banco: f.banco }));
+
+const classeLink =
+  "rounded-sm transition-colors duration-rapida ease-padrao hover:text-ambar-400";
+---
+
+<footer data-superficie="grafite" class="border-t-4 border-ambar-500 bg-grafite-950 text-grafite-300">
+  <Container class="grid gap-xl py-2xl md:grid-cols-12 md:gap-lg md:py-3xl">
+    <div class="md:col-span-5">
+      <a href="#inicio" class:list={["inline-flex", classeLink]}>
+        <Marca tom="escuro" tamanho="lg" />
+      </a>
+      <p class="mt-sm max-w-legenda text-sm leading-relaxed text-grafite-400">
+        Oficina mecânica em {endereco.cidade}/{endereco.uf} desde {oficina.desdeAno}.
+      </p>
+    </div>
+
+    <div class="md:col-span-4">
+      <p class="font-display text-sm font-bold uppercase tracking-widest text-grafite-400">Endereço</p>
+      <address class="mt-xs not-italic leading-relaxed text-off-white">
+        {endereco.logradouro}<br />
+        {endereco.bairro} · {endereco.cidade}/{endereco.uf}<br />
+        CEP&nbsp;{endereco.cep}
+      </address>
+    </div>
+
+    <div class="md:col-span-3">
+      <p class="font-display text-sm font-bold uppercase tracking-widest text-grafite-400">Contato</p>
+      <ul class="mt-xs text-off-white" role="list">
+        <li>
+          <a href={tel} class:list={["inline-flex min-h-alvo items-center gap-2xs whitespace-nowrap tabular-nums", classeLink]}>
+            <Icone nome="mdi:phone" class="size-5 text-ambar-500" />
+            {oficina.telefone}
+          </a>
+        </li>
+        <li>
+          <a
+            href={whatsappGeral()}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={["inline-flex min-h-alvo items-center gap-2xs", classeLink]}
+          >
+            <Icone nome="mdi:whatsapp" class="size-5 text-ambar-500" />
+            WhatsApp
+          </a>
+        </li>
+      </ul>
+    </div>
+  </Container>
+
+  <div class="border-t border-grafite-800">
+    <Container class="flex flex-col gap-sm pt-md pb-3xl text-sm text-grafite-400 lg:flex-row lg:items-start lg:justify-between lg:gap-xl">
+      <p class="shrink-0">
+        © {ano} {oficina.nome} · CNPJ&nbsp;{oficina.cnpj}
+      </p>
+      {
+        creditos.length > 0 && (
+          <details class="group lg:text-right">
+            <summary class:list={["inline-flex min-h-alvo cursor-pointer list-none items-center gap-2xs [&::-webkit-details-marker]:hidden", classeLink]}>
+              Créditos das fotos
+              <Icone nome="mdi:plus" class="size-5 text-ambar-500 group-open:hidden" />
+            </summary>
+            <ul class="leading-relaxed" role="list">
+              {
+                creditos.map((c) => (
+                  <li>
+                    <a
+                      href={c.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class:list={["inline-flex min-h-alvo items-center underline decoration-grafite-600 underline-offset-2", classeLink]}
+                    >
+                      {c.autor}
+                    </a>
+                    {` (${c.banco})`}
+                  </li>
+                ))
+              }
+            </ul>
+          </details>
+        )
+      }
+    </Container>
+  </div>
+</footer>

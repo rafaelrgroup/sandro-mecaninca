@@ -1,0 +1,68 @@
+---
+import Botao from "@/components/ui/Botao.astro";
+import Container from "@/components/ui/Container.astro";
+import oficina, { afirmacoes } from "@/data/oficina";
+import { tel, whatsappGeral } from "@/lib/links";
+import { SELO, seloLetreiroSvg } from "@/lib/marca.js";
+
+// Selo da marca do letreiro (P4 MC1, buraco 1): o mostrador de SANDRO
+// sobre o painel grafite-950, no polígono chanfrado do SELO. Cores =
+// tokens --color-marca-* (LETREIRO_CORES_VAR); sobre âmbar o painel dá
+// 7,2:1 contra o fundo. Lado 72 (size-2xl).
+const selo = seloLetreiroSvg();
+---
+
+<section id="contato" data-superficie="ambar" aria-labelledby="contato-titulo" class="bg-ambar-500 py-3xl text-grafite-950 md:py-4xl">
+  <Container>
+    <div class="max-w-titulo" data-reveal>
+      <p class="flex items-center gap-xs font-display text-sm font-bold uppercase tracking-widest md:text-base">
+        <span class="h-0 w-lg border-t-2 border-current" aria-hidden="true"></span>
+        Fale com a oficina
+      </p>
+      <h2
+        id="contato-titulo"
+        class="mt-md text-5xl leading-none font-extrabold tracking-tight uppercase text-balance md:text-7xl"
+      >
+        Seu carro deu sinal? Não espere piorar.
+      </h2>
+      <p class="mt-md max-w-texto text-lg leading-relaxed md:text-xl">
+        Mande uma mensagem contando o que o carro está fazendo. {afirmacoes.orcamentoVemAntes.texto}
+      </p>
+      <div class="mt-lg flex flex-col gap-sm sm:flex-row sm:flex-wrap md:mt-xl">
+        <Botao
+          href={whatsappGeral()}
+          variante="whatsapp"
+          tom="ambar"
+          tamanho="lg"
+          icone="mdi:whatsapp"
+          target="_blank"
+        >
+          Chamar no WhatsApp
+        </Botao>
+        <Botao href={tel} variante="contorno" tom="ambar" tamanho="lg" icone="mdi:phone">
+          Ligar {oficina.telefone}
+        </Botao>
+      </div>
+    </div>
+
+    <!-- Fim da estrada (DESENHO §4 item 9 e §5): o último trecho, com as
+         classes da estrada do Como funciona, chega no selo. Estático: o
+         movimento é de P3. Vertical até lg, horizontal a partir dele. -->
+    <div
+      data-estrada-fim
+      class="mt-xl flex w-2xl flex-col items-center md:mt-2xl lg:w-full lg:flex-row"
+      aria-hidden="true"
+    >
+      <span class="estrada-trecho relative h-2xl w-md overflow-hidden lg:h-md lg:w-auto lg:flex-1">
+        <span class="estrada-faixa absolute inset-y-0 left-1/2 w-3xs -translate-x-1/2 lg:inset-x-0 lg:top-1/2 lg:left-0 lg:h-3xs lg:w-auto lg:-translate-y-1/2 lg:translate-x-0"></span>
+      </span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${SELO.lado} ${SELO.lado}`}
+        class="block size-2xl shrink-0"
+        data-selo
+        set:html={selo}
+      />
+    </div>
+  </Container>
+</section>

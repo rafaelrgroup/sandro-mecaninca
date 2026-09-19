@@ -1,0 +1,60 @@
+---
+import "@/styles/global.css";
+import oficina from "@/data/oficina";
+import { gerarJsonLd, urlBase } from "@/lib/jsonld";
+
+interface Props {
+  titulo: string;
+  descricao: string;
+}
+
+const { titulo, descricao } = Astro.props;
+
+// Endereços absolutos (canonical, og:url, og:image) só com domínio
+// confirmado em oficina.ts.
+const base = urlBase(oficina);
+const canonical = base ? new URL(Astro.url.pathname, base).href : null;
+const ogImagem = base ? new URL("og-image.png", base).href : null;
+const jsonLd = JSON.stringify(gerarJsonLd(oficina)).replace(/</g, "\\u003c");
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <!-- Antes de qualquer CSS: marca JS disponível e movimento reduzido,
+         para o CSS decidir sem piscar. -->
+    <script is:inline>
+      (function (d) {
+        var h = d.documentElement;
+        h.classList.add("js");
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          h.classList.add("movimento-reduzido");
+        }
+      })(document);
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={oficina.nome} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImagem && <meta property="og:image" content={ogImagem} />}
+    {ogImagem && <meta property="og:image:width" content="1200" />}
+    {ogImagem && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content={ogImagem ? "summary_large_image" : "summary"} />
+
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body class="min-h-screen font-texto antialiased">
+    <slot />
+  </body>
+</html>

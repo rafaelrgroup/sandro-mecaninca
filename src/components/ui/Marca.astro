@@ -1,0 +1,55 @@
+---
+// Marca única da oficina, INLINE: a marca recriada do letreiro da fachada
+// (src/lib/marca.js, bloco "MARCA DO LETREIRO"; origem de cada parte em
+// scripts/gerar-marca/origem.json). Cores = tokens --color-marca-* e o
+// painel grafite-950 (LETREIRO_CORES_VAR). O painel faz parte da marca nos
+// dois tons (MC1, buraco 2), então o tom não troca cor: fica na API e sai
+// em data-tom.
+//
+// Regras de tamanho (altura da marca na tela):
+//   "xs" 32 px (h-lg): sem descritor, sempre (abaixo de 40 px é obrigatório).
+//   "sm" 48 px (h-xl, cabeçalho): a completa (7,3:1, ~352 px) só a partir
+//     de xl; abaixo dela, a sem descritor (3,96:1, ~190 px), porque a
+//     completa não cabe ao lado da navegação e dos botões.
+//   "lg" 72 px (h-2xl, rodapé): sem descritor (~285 px). A completa teria
+//     ~526 px, mais que a coluna da marca no rodapé em qualquer largura.
+//   Com duas versões, só uma aparece de cada vez (a outra é display:none,
+//   fora da árvore de acessibilidade). max-w-full: onde a caixa for mais
+//   estreita que a marca (rodapé entre md e lg: coluna de ~275 px), o
+//   desenho encolhe dentro da mesma altura em vez de invadir a vizinha.
+import oficina from "@/data/oficina";
+import { LETREIRO_VIEWBOX_COMPLETA, LETREIRO_VIEWBOX_SEM_DESCRITOR, letreiroSvg } from "@/lib/marca.js";
+
+interface Props {
+  /** Fundo sobre o qual a marca aparece. */
+  tom?: "claro" | "escuro";
+  /** "sm" cabeçalho (48 px), "lg" rodapé (72 px), "xs" 32 px sem descritor. */
+  tamanho?: "xs" | "sm" | "lg";
+}
+
+const { tom = "claro", tamanho = "sm" } = Astro.props;
+
+const altura = { xs: "h-lg", sm: "h-xl", lg: "h-2xl" }[tamanho];
+// Classes literais (o Tailwind só gera o que acha escrito no código).
+const versoes =
+  tamanho === "sm"
+    ? [
+        { comDescritor: false, visivel: "block xl:hidden" },
+        { comDescritor: true, visivel: "hidden xl:block" },
+      ]
+    : [{ comDescritor: false, visivel: "block" }];
+---
+
+{
+  versoes.map((v) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={v.comDescritor ? LETREIRO_VIEWBOX_COMPLETA : LETREIRO_VIEWBOX_SEM_DESCRITOR}
+      role="img"
+      aria-label={oficina.nome}
+      data-tom={tom}
+      class:list={[v.visivel, "w-auto max-w-full shrink-0", altura]}
+      set:html={letreiroSvg({ comDescritor: v.comDescritor })}
+    />
+  ))
+}

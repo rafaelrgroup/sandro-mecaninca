@@ -1,0 +1,120 @@
+---
+import { Icon } from "astro-icon/components";
+
+type Variante = "primario" | "whatsapp" | "contorno" | "fantasma";
+type Tamanho = "sm" | "md" | "lg";
+/** Superfície sobre a qual o botão aparece (DECISOES-P1a item 3+5). */
+type Tom = "claro" | "escuro" | "ambar";
+
+interface Props {
+  variante?: Variante;
+  tamanho?: Tamanho;
+  /**
+   * Tom da superfície. Escolhe o par de verde do WhatsApp e o contorno do
+   * Ligar que dão >= 3:1 de forma contra ela. Sem `tom`, o botão mantém as
+   * cores de antes (chamadas da rodada 1 das seções).
+   */
+  tom?: Tom;
+  /** Se presente, o botão renderiza como <a href="...">. */
+  href?: string;
+  /** Nome de ícone (ver Icone.astro) para exibir antes do texto. */
+  icone?: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+  type?: "button" | "submit" | "reset";
+}
+
+const {
+  variante = "primario",
+  tamanho = "md",
+  tom,
+  href,
+  icone,
+  class: classeExtra,
+  target,
+  rel,
+  type = "button",
+} = Astro.props;
+
+// Alvo >= 48x48 (item 7). Hover responde com transform (sobe 3xs) e
+// :active devolve o botão ao chão; sem movimento com reduced-motion.
+// O anel de foco é o global (:focus-visible em global.css, cor pela
+// superfície); o botão não põe contorno próprio (ADENDO 3 item 6).
+const classesBase =
+  "inline-flex min-h-alvo min-w-alvo items-center justify-center gap-2xs font-display font-bold uppercase tracking-wide transition duration-base ease-padrao rounded-sm hover:-translate-y-3xs active:translate-y-0 motion-reduce:transition-colors motion-reduce:hover:translate-y-0";
+
+// Cores de antes: valem quando a chamada não passa `tom`.
+const classesVariante: Record<Variante, string> = {
+  primario: "bg-ambar-500 text-grafite-950 hover:bg-ambar-400 active:bg-ambar-600",
+  whatsapp: "bg-whatsapp-700 text-white hover:bg-whatsapp-800 active:bg-whatsapp-800",
+  contorno:
+    "bg-transparent text-off-white border border-grafite-500 hover:border-ambar-500 hover:text-ambar-400",
+  fantasma: "bg-transparent text-grafite-800 hover:bg-grafite-100",
+};
+
+// Par por tom (item 3+5; ADENDO 3 itens 2 e 3). Toda variante com tom tem
+// border-2 (caixa igual à do contorno vizinho); sem contorno visível ela é
+// border-transparent. Fantasma não tem forma: só ação terciária, com
+// ícone, junto de botão com forma; nunca ação única (sem uso hoje).
+const classesTom: Record<Tom, Record<Variante, string>> = {
+  claro: {
+    primario:
+      "bg-ambar-500 text-grafite-950 border-2 border-grafite-950 hover:bg-ambar-400 active:bg-ambar-600",
+    whatsapp:
+      "bg-whatsapp-700 text-white border-2 border-transparent hover:bg-whatsapp-800 active:bg-whatsapp-800",
+    contorno: "bg-transparent text-grafite-800 border-2 border-grafite-800",
+    fantasma:
+      "bg-transparent text-grafite-800 border-2 border-transparent hover:bg-grafite-100 active:bg-grafite-100",
+  },
+  escuro: {
+    primario:
+      "bg-ambar-500 text-grafite-950 border-2 border-transparent hover:bg-ambar-400 active:bg-ambar-600",
+    whatsapp:
+      "bg-whatsapp-400 text-grafite-950 border-2 border-transparent hover:bg-whatsapp-300 active:bg-whatsapp-400",
+    contorno:
+      "bg-transparent text-off-white border-2 border-grafite-400 hover:border-ambar-500 hover:text-ambar-400",
+    fantasma:
+      "bg-transparent text-off-white border-2 border-transparent hover:bg-grafite-800 hover:text-ambar-400 active:bg-grafite-800 active:text-ambar-400",
+  },
+  ambar: {
+    primario:
+      "bg-grafite-950 text-ambar-500 border-2 border-transparent hover:bg-grafite-800 active:bg-grafite-800",
+    // WhatsApp no âmbar: sem cor no hover/active, só o transform da base.
+    whatsapp: "bg-whatsapp-800 text-white border-2 border-transparent",
+    contorno:
+      "bg-transparent text-grafite-950 border-2 border-grafite-950 hover:bg-grafite-950 hover:text-ambar-500 active:bg-grafite-950 active:text-ambar-500",
+    fantasma:
+      "bg-transparent text-grafite-950 border-2 border-transparent hover:bg-ambar-400 active:bg-ambar-600",
+  },
+};
+
+const classesTamanho: Record<Tamanho, string> = {
+  sm: "text-sm px-sm py-2xs",
+  md: "text-base px-md py-xs",
+  lg: "text-lg px-lg py-sm",
+};
+
+const classes = [
+  classesBase,
+  tom ? classesTom[tom][variante] : classesVariante[variante],
+  classesTamanho[tamanho],
+  classeExtra,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const Elemento = href ? "a" : "button";
+---
+
+<Elemento
+  class={classes}
+  href={href}
+  target={target}
+  rel={target === "_blank" ? rel ?? "noopener noreferrer" : rel}
+  type={!href ? type : undefined}
+  data-tom={tom}
+>
+  {icone && <Icon name={icone} class="size-5" aria-hidden="true" />}
+  <slot />
+</Elemento>

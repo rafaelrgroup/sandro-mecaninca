@@ -1,0 +1,70 @@
+---
+// Prova social do Google (P4, fatia PS3; decisão do dono (4) em
+// FATIAS-P4.md; ERRATA E1 em DESENHO-APROVADO.md#L78-80). Contrato:
+// testes/prova-social.mjs#L6-29.
+// - Todo texto de negócio vem de `afirmacoes` (fonte "google"): nota,
+//   total e trechos. Aqui só há rótulos e a data formatada.
+// - Único lugar da página onde nota, total, "avaliações" e a data de
+//   conferência podem aparecer. Sem estrela, sem autor, sem foto.
+// - A atribuição é link de texto para oficina.linkGoogle; o Botao do
+//   Google é só o "Ver no Google" de Localizacao.astro.
+// - Sem item "google" na lista ou com linkGoogle vazio, não renderiza nada.
+// - NÃO usa [data-hodometro]: scripts/hodometro.ts pega o primeiro do documento.
+import oficina, { afirmacoes, type Afirmacao } from "@/data/oficina";
+
+const linkGoogle = oficina.linkGoogle.trim();
+const doGoogle = (Object.entries(afirmacoes) as [string, Afirmacao][]).filter(
+  ([, a]) => a.fonte === "google" && a.texto.trim(),
+);
+const porChave = (chave: string) => doGoogle.find(([k]) => k === chave)?.[1];
+const nota = porChave("googleNota");
+const total = porChave("googleTotal");
+const trechos = doGoogle.filter(([k]) => k !== "googleNota" && k !== "googleTotal").map(([, a]) => a);
+
+// Data de conferência: a mais recente dos itens "google" (ISO AAAA-MM-DD),
+// exibida como DD/MM/AAAA.
+const conferidaEm = doGoogle
+  .map(([, a]) => a.conferidaEm ?? "")
+  .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
+  .sort()
+  .at(-1);
+const dataVisivel = conferidaEm?.split("-").reverse().join("/");
+
+const renderiza = doGoogle.length > 0 && linkGoogle !== "";
+
+const classeLink =
+  "rounded-sm font-semibold text-ambar-700 underline underline-offset-2 transition-colors duration-rapida ease-padrao hover:text-grafite-950";
+---
+
+{
+  renderiza && (
+    <figure data-prova-social class="mt-lg border-t border-grafite-100 pt-md">
+      {(nota || total) && (
+        <p class="flex flex-wrap items-baseline gap-x-xs gap-y-3xs">
+          <span class="font-display text-sm font-bold uppercase tracking-widest text-grafite-500">Nota no Google</span>
+          {nota && <span class="font-display text-4xl font-extrabold leading-none tabular-nums text-ambar-700">{nota.texto}</span>}
+          {total && <span class="text-sm font-medium tabular-nums text-grafite-800">{total.texto}</span>}
+        </p>
+      )}
+      {trechos.length > 0 && (
+        <ul class="mt-sm space-y-xs" role="list">
+          {trechos.map((t) => (
+            <li class="border-l-2 border-ambar-500 pl-sm text-base leading-relaxed text-grafite-800">
+              <q>{t.texto}</q>
+            </li>
+          ))}
+        </ul>
+      )}
+      <figcaption class="mt-sm text-sm leading-relaxed text-grafite-500">
+        Resumo das avaliações no{" "}
+        <a href={linkGoogle} target="_blank" rel="noopener noreferrer" class={classeLink}>Google</a>
+        {dataVisivel && (
+          <>
+            , conferido em <time datetime={conferidaEm}>{dataVisivel}</time>
+          </>
+        )}
+        .
+      </figcaption>
+    </figure>
+  )
+}

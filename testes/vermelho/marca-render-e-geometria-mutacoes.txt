@@ -1,0 +1,25 @@
+Vermelhos vistos em 2026-09-19 (Node 22.12.0). Cópias mutadas em scratch, nunca na árvore viva.
+
+testes/marca-render.mjs --projeto <cópia de .verif/marca mutada>   (verde na .verif/marca intacta: 33 ok, 0 falhas, exit 0)
+  m1 Marca.astro `comDescritor = true`            exit 1
+     "xs: viewBox 0 -12 424 124 (achei 0 -12 424 160)"
+     "xs: sem <text> (achei ["MECÂNICA"])"
+     "xs: regra <40px sem descritor (32px, 1 <text>)"
+  m2 Marca.astro viewBox fixo VIEWBOX_COMPLETA    exit 1
+     "xs: viewBox 0 -12 424 124 (achei 0 -12 424 160)"
+  m3 marca.js novoPrefixoId() devolve "marca"     exit 1
+     "prova-marca: ids de clipPath distintos entre marcas (repetidos: marca-64,marca-60,marca-56)"
+     "index.html (cabeçalho+rodapé): ids de clipPath distintos entre marcas (repetidos: marca-64,marca-60,marca-56)"
+  m4 Marca.astro xs → "h-xl"                      exit 1
+     "xs: classe de altura h-lg (achei h-xl)"
+  m5 global.css --spacing-lg 2rem → 2.75rem       exit 1
+     "xs: .h-lg mede 32px no CSS gerado (achei 44)"
+     "xs: regra <40px sem descritor (44px, 0 <text>)"
+
+testes/marca-geometria-mutacoes.mjs   (com o checker real: base 0/0; 534 mutações, 534 mortas, exit 0)
+  checker com a conferência de stroke-width do selo trocada por `true`   exit 1
+     "534 mutações, 532 mortas"
+     "public/favicon.svg traço: 18→19: checker saiu 0 (esperado 1)"
+     "decisão traço do favicon: 18→19: checker saiu 0 (esperado 1)"
+  1ª versão do próprio harness (passava --public duas vezes; o checker lê a 1ª) → "534 mutações, 0 mortas":
+     o harness acusou a si mesmo, corrigido em rodar({publico, decisao}).

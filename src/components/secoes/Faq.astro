@@ -1,0 +1,50 @@
+---
+import Botao from "@/components/ui/Botao.astro";
+import CabecalhoSecao from "@/components/ui/CabecalhoSecao.astro";
+import Container from "@/components/ui/Container.astro";
+import Icone from "@/components/ui/Icone.astro";
+import oficina from "@/data/oficina";
+import { whatsappGeral } from "@/lib/links";
+---
+
+{
+  oficina.faq.length > 0 && (
+    <section id="duvidas" aria-labelledby="duvidas-titulo" class="py-3xl md:py-4xl">
+      <Container>
+        <div data-reveal>
+          <CabecalhoSecao
+            variante="etiqueta"
+            idTitulo="duvidas-titulo"
+            eyebrow="Dúvidas frequentes"
+            titulo="Perguntas que sempre aparecem"
+            subtitulo="Não encontrou a sua? Pergunte direto para a oficina."
+          />
+        </div>
+
+        <div class="mt-xl grid gap-lg md:mt-2xl lg:grid-cols-12 lg:gap-xl">
+          <div class="faq-lista border-t border-grafite-100 lg:col-span-7" data-reveal>
+            {oficina.faq.map((item) => (
+              <details class="faq-item group border-b border-grafite-100">
+                <summary class="flex cursor-pointer items-center justify-between gap-md py-md text-left font-display text-xl leading-tight font-bold uppercase text-grafite-950 transition-colors duration-rapida ease-padrao hover:text-ambar-700 md:text-2xl">
+                  <span>{item.pergunta}</span>
+                  <span class="inline-flex size-10 shrink-0 items-center justify-center rounded-sm border border-grafite-100 text-grafite-800 transition-colors duration-base ease-padrao group-hover:border-ambar-500 group-open:border-ambar-500 group-open:bg-ambar-500 group-open:text-grafite-950">
+                    <Icone nome="mdi:plus" class="faq-sinal size-5" />
+                  </span>
+                </summary>
+                <div class="faq-resposta max-w-prose pr-lg pb-md md:pr-3xl leading-relaxed text-grafite-500 md:text-lg">
+                  <p>{item.resposta}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+
+          <div class="lg:col-span-5" data-reveal>
+            <Botao href={whatsappGeral()} variante="whatsapp" tom="claro" icone="mdi:whatsapp" target="_blank">
+              Perguntar no WhatsApp
+            </Botao>
+          </div>
+        </div>
+      </Container>
+    </section>
+  )
+}

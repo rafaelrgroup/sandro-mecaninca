@@ -1,0 +1,132 @@
+---
+import CabecalhoSecao from "@/components/ui/CabecalhoSecao.astro";
+import Container from "@/components/ui/Container.astro";
+import Icone from "@/components/ui/Icone.astro";
+import oficina from "@/data/oficina";
+import { whatsappServico, whatsappSintoma } from "@/lib/links";
+
+// Painel do carro (DESENHO §6): uma luz-espia por área de serviço dos
+// sintomas (na ordem em que aparecem) e um chip por sintoma. Luz e chip
+// levam ao WhatsApp com a mensagem pronta de links.ts.
+const nomeServico = new Map(oficina.servicos.map((s) => [s.slug, s.nome]));
+
+// Ícone de painel por área: só visual. Área sem ícone aqui cai na chave.
+const iconeLuz: Record<string, string> = {
+  freios: "mdi:car-brake-alert",
+  arrefecimento: "mdi:coolant-temperature",
+  "suspensao-e-direcao": "mdi:steering",
+  embreagem: "mdi:car-clutch",
+  "troca-de-oleo-e-filtros": "mdi:oil",
+  "diagnostico-de-ruidos-e-falhas": "mdi:engine-outline",
+  "revisao-preventiva": "mdi:car-wrench",
+};
+
+// Área cujo slug não existe em `servicos` não vira luz (sem rótulo nem
+// mensagem com nome de serviço).
+const luzes = [...new Set(oficina.sintomas.map((s) => s.servicoSlug))]
+  .filter((area) => nomeServico.has(area))
+  .map((area) => {
+    const nome = nomeServico.get(area)!;
+    return { area, nome, icone: iconeLuz[area] ?? "mdi:wrench", href: whatsappServico(nome) };
+  });
+
+const chips = oficina.sintomas.map((sintoma) => {
+  const servico = nomeServico.get(sintoma.servicoSlug) ?? "";
+  return {
+    area: sintoma.servicoSlug,
+    texto: sintoma.texto,
+    servico,
+    href: whatsappSintoma(sintoma.texto, servico),
+  };
+});
+
+// :has() acende a luz da área do chip apontado/focado (e a própria luz
+// apontada/focada). Gerado das áreas acima para não repetir slug à mão;
+// cores só por token.
+const seletoresAcesa = luzes.flatMap(({ area }) => [
+  `[data-painel]:has([data-chip="${area}"]:is(:hover, :focus-visible)) [data-luz="${area}"]`,
+  `[data-luz="${area}"]:is(:hover, :focus-visible)`,
+]);
+const cssAcesa = `${seletoresAcesa.join(",\n")} {
+  background-color: var(--color-ambar-500);
+  border-color: var(--color-ambar-500);
+  color: var(--color-grafite-950);
+}`;
+---
+
+<section aria-labelledby="sintomas-titulo" class="py-sm md:py-xl">
+  <Container>
+    <div
+      data-painel
+      data-superficie="grafite"
+      class="recorte-chanfro grid gap-sm bg-grafite-900 p-sm text-off-white md:gap-md md:p-lg lg:grid-cols-12 lg:items-center lg:gap-x-xl"
+      data-reveal
+    >
+      <CabecalhoSecao
+        variante="placa"
+        idTitulo="sintomas-titulo"
+        titulo="O que seu carro está fazendo?"
+        class="lg:col-span-5"
+      />
+
+      <ul class="grid grid-cols-4 gap-2xs sm:grid-cols-7 lg:col-span-7" role="list" aria-label="Luzes do painel por área">
+        {
+          luzes.map((luz) => (
+            <li>
+              <a
+                href={luz.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex min-h-alvo flex-col items-center gap-3xs text-center"
+              >
+                <span
+                  data-luz={luz.area}
+                  class="inline-flex size-alvo items-center justify-center rounded-full border-2 border-grafite-700 bg-grafite-950 text-grafite-400 transition-colors duration-rapida ease-padrao"
+                  aria-hidden="true"
+                >
+                  <Icone nome={luz.icone} class="size-md" />
+                </span>
+                <span class="font-display text-xs leading-tight font-semibold sm:text-sm text-balance text-grafite-300">
+                  {luz.nome}
+                </span>
+                <span class="sr-only">(abre o WhatsApp)</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="lg:col-span-12">
+        <p class="text-sm leading-relaxed text-grafite-300 md:text-base">
+          Toque no sintoma: o WhatsApp abre com a mensagem pronta para a oficina.
+        </p>
+        <ul class="mt-xs grid grid-cols-2 gap-2xs sm:flex sm:flex-wrap" role="list">
+          {
+            chips.map((chip) => (
+              <li class="min-w-0">
+                <a
+                  href={chip.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-chip={chip.area}
+                  class="flex h-full min-h-alvo items-center gap-2xs rounded-sm border border-grafite-700 bg-grafite-800 px-xs py-3xs text-sm leading-tight font-medium text-off-white transition-colors duration-rapida ease-padrao hover:border-ambar-500 active:bg-grafite-700"
+                >
+                  <Icone nome="mdi:whatsapp" class="hidden size-sm shrink-0 text-grafite-400 sm:block" />
+                  <span>{chip.texto}</span>
+                  {chip.servico && <span class="sr-only">(serviço: {chip.servico}; abre o WhatsApp)</span>}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style is:inline set:html={cssAcesa}></style>
+
+<script>
+  // Teste de lâmpadas ao entrar na tela, uma vez (M3).
+  import "@/scripts/lampadas";
+</script>

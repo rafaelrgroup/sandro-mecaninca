@@ -1,0 +1,105 @@
+---
+// Hero (P2 F7; DESENHO §4 item 2, DECISOES-P1a 3+5 e 9). Texto e foto lado
+// a lado, sem nada por cima da foto (texto nunca sobre foto, foto nunca sob
+// véu nem gradiente; o painel de texto encosta na foto). H1 = a promessa com
+// fonte (afirmacoes.orcamentoAntes), com a 2ª palavra em destaque que nunca
+// quebra de linha. Botões só a partir de 768: abaixo
+// disso quem atende é a barra fixa. A estrada parte do pé do hero (estático:
+// o movimento é de P3).
+import Botao from "@/components/ui/Botao.astro";
+import Container from "@/components/ui/Container.astro";
+import Foto from "@/components/ui/Foto.astro";
+import oficina, { afirmacoes } from "@/data/oficina";
+import { tel, whatsappGeral } from "@/lib/links";
+
+// Destaque = a 2ª palavra ("antes"): curta o bastante para nunca quebrar
+// nem estourar a coluna do texto em nenhuma largura.
+const [inicioTitulo, destaqueTitulo, ...restoTitulo] = afirmacoes.orcamentoAntes.texto.trim().split(/\s+/);
+
+// "Desde <ano>" aparece só aqui no hero (no máximo 1 vez).
+const fatos = [
+  `Desde ${oficina.desdeAno}`,
+  afirmacoes.notaFiscal.texto,
+  afirmacoes.carrosDePasseio.texto,
+];
+---
+
+<section id="inicio" data-hero data-superficie="grafite" aria-labelledby="hero-titulo" class="bg-grafite-950 text-off-white">
+  <Container class="pt-lg md:pt-2xl lg:pt-xl">
+    <div class="grid gap-lg md:grid-cols-2 md:items-center md:gap-xl">
+      <div data-hero-texto>
+        <p
+          class="entrada-hero flex flex-wrap items-center gap-x-xs font-display text-sm font-bold uppercase tracking-widest text-ambar-500 md:text-base"
+        >
+          <span class="entrada-barra h-px w-xl bg-ambar-500" aria-hidden="true"></span>
+          Oficina mecânica · {oficina.endereco.bairro} · {oficina.endereco.cidade}/{oficina.endereco.uf}
+        </p>
+
+        <h1
+          id="hero-titulo"
+          class="entrada-hero mt-sm text-4xl leading-none font-extrabold tracking-tight uppercase sm:text-5xl lg:text-6xl"
+          style="--ordem: 1"
+        >
+          {inicioTitulo}{" "}
+          <span class="whitespace-nowrap text-ambar-400" data-destaque>{destaqueTitulo}</span>{" "}
+          {restoTitulo.join(" ")}
+        </h1>
+
+        <p
+          class="entrada-hero mt-sm max-w-texto leading-relaxed text-grafite-100 sm:text-lg md:mt-md lg:text-xl"
+          style="--ordem: 2"
+        >
+          {afirmacoes.orcamentoEntaoServico.texto}
+        </p>
+
+        <div
+          class="entrada-hero mt-lg hidden flex-wrap gap-sm md:flex"
+          style="--ordem: 3"
+          data-hero-botoes
+        >
+          <Botao
+            href={whatsappGeral()}
+            variante="whatsapp"
+            tom="escuro"
+            tamanho="lg"
+            icone="mdi:whatsapp"
+            target="_blank"
+          >
+            Chamar no WhatsApp
+          </Botao>
+          <Botao href={tel} variante="contorno" tom="escuro" tamanho="lg" icone="mdi:phone">
+            Ligar {oficina.telefone}
+          </Botao>
+        </div>
+      </div>
+
+      <Foto slot="hero" sizes="(min-width: 768px) 50vw, 100vw" prioridade />
+    </div>
+
+    <ul
+      class="entrada-hero mt-lg flex flex-col gap-2xs border-t border-grafite-700 pt-sm text-sm font-medium text-grafite-300 sm:flex-row sm:flex-wrap sm:gap-x-lg md:mt-xl lg:mt-lg"
+      style="--ordem: 4"
+    >
+      {
+        fatos.map((fato) => (
+          <li class="flex items-center gap-xs">
+            <span class="h-px w-sm shrink-0 bg-ambar-500" aria-hidden="true" />
+            {fato}
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Início da estrada (DESENHO §5, "parte no hero"): um trecho com as
+         classes da estrada do Como funciona, encostado no pé do hero.
+         Vertical até lg, horizontal a partir dele. Estático: sem
+         data-estrada, estrada.ts não o toca; o movimento é de P3. -->
+    <div data-estrada-inicio class="mt-lg flex" aria-hidden="true">
+      <span class="estrada-trecho relative h-xl w-md overflow-hidden lg:h-md lg:w-full">
+        <span
+          class="estrada-faixa absolute inset-y-0 left-1/2 w-3xs -translate-x-1/2 lg:inset-x-0 lg:top-1/2 lg:left-0 lg:h-3xs lg:w-auto lg:-translate-y-1/2 lg:translate-x-0"
+        ></span>
+      </span>
+    </div>
+  </Container>
+</section>

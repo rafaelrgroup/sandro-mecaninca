@@ -1,0 +1,39 @@
+=== mutação gR-fora: T2-b-hero gR 0.9957 → 1.25
+FALHOU (2):
+  T2-b-hero: gR=1.25 fora de [0.85,1.2]
+  T2-b-hero: gR registrado 1.25 ≠ receita 0.9957
+exit=1
+=== mutação gB-dentro: T4-c-servico gB 0.858 → 0.90 (dentro do clamp, mas não é o da receita)
+FALHOU (1):
+  T4-c-servico: gB registrado 0.9 ≠ receita 0.8580
+exit=1
+=== mutação gamma: T7-b-hero gammaOut 1.15 → 1.35
+FALHOU (1):
+  T7-b-hero: gammaOut=1.35 fora de {1.15,1.2,1.25,1.3}
+exit=1
+=== mutação janela: T3-d-servico janela.top 1954 → 2004 (passa do pé da região)
+FALHOU (4):
+  T3-d-servico: janela de CREDITOS {"left":0,"top":2004,"width":2068,"height":1379} ≠ janelas.json {"left":0,"top":1954,"width":2068,"height":1379}
+  T3-d-servico: janela {"left":0,"top":2004,"width":2068,"height":1379} sai da região aprovada {"left":0,"top":1654,"right":2068,"bottom":3382}
+  T3-d-servico: gR registrado 1.1114 ≠ receita 1.1094
+  T3-d-servico: gB registrado 0.8971 ≠ receita 0.9006
+exit=1
+=== mutação dim: T6-a-sobre regravado 1440x1799 (sha atualizado)
+FALHOU (1):
+  T6-a-sobre: mede 1440x1799, lugar pede 1440x1800
+exit=1
+=== mutação escuro: T7-b-hero escurecido 10% (sha atualizado)
+FALHOU (1):
+  T7-b-hero: luma tratada 122.77 < original 135.19
+exit=1
+=== mutação gamma-maior: T2-b-hero gammaOut 1.15 → 1.20 (dentro da escada, mas não é o que a receita deu)
+FALHOU (2):
+  T2-b-hero: o mestre não é o que a receita dá com esses ganhos e esse gammaOut
+  T2-b-hero: gammaOut 1.2 não é o menor: 1.15 já cumpre a luma
+exit=1
+=== mutação janela-fora-quadro: T4-c-servico janela.left 0 → 1 (sai do quadro 5240: sharp recusa o extract)
+FALHOU (3):
+  T4-c-servico: janela de CREDITOS {"left":1,"top":0,"width":5240,"height":3493} ≠ janelas.json {"left":0,"top":0,"width":5240,"height":3493}
+  T4-c-servico: janela {"left":1,"top":0,"width":5240,"height":3493} sai da região aprovada {"left":0,"top":0,"right":5240,"bottom":3493}
+  T4-c-servico: não deu para conferir: extract_area: bad extract area
+exit=1

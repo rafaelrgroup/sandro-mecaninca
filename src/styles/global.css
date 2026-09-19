@@ -1,0 +1,520 @@
+@import "tailwindcss";
+
+/* Fontes self-hosted (@fontsource), com font-display: swap já embutido
+   pelos pacotes. Pesos escolhidos: display 600/700/800, texto variável. */
+@import "@fontsource/barlow-condensed/600.css";
+@import "@fontsource/barlow-condensed/700.css";
+@import "@fontsource/barlow-condensed/800.css";
+@import "@fontsource-variable/inter";
+
+/*
+ * Tokens do design system Sandro Mecanica.
+ * Único lugar do projeto onde valores hexadecimais podem aparecer —
+ * ver DESIGN.md para a tabela de contraste (WCAG AA) de cada par
+ * cor-de-texto / cor-de-fundo usado nos componentes.
+ */
+@theme {
+  /* Desliga a paleta e as fontes padrão do Tailwind: só os tokens
+     definidos abaixo existem no projeto. */
+  --color-*: initial;
+  --font-*: initial;
+  /* Raio e sombra também: sem isto, rounded-md/lg e shadow-* cairiam
+     calados no padrão do Tailwind. Só existe o que a decisão mantém. */
+  --radius-*: initial;
+  --shadow-*: initial;
+
+  /* ---- Cor: grafite (neutros) ---- */
+  --color-grafite-950: #14161a;
+  --color-grafite-900: #1b1e24;
+  --color-grafite-800: #262a33;
+  --color-grafite-700: #343a46;
+  --color-grafite-600: #4a5262;
+  --color-grafite-500: #636c7e;
+  --color-grafite-400: #8890a0;
+  --color-grafite-300: #b0b6c2;
+  --color-grafite-100: #e4e6ea;
+
+  /* ---- Cor: base clara e branco ---- */
+  --color-off-white: #f7f5f2;
+  --color-white: #ffffff;
+
+  /* ---- Cor: acento âmbar ---- */
+  --color-ambar-700: #9c6208; /* uso em texto sobre fundo claro (AA) */
+  --color-ambar-600: #b8790a; /* hover / decorativo */
+  --color-ambar-500: #e0921a; /* acento principal: fundo de botão, texto grande sobre grafite */
+  --color-ambar-400: #f0a93a; /* decorativo, destaque grande */
+
+  /* ---- Cor: anel de foco (DECISOES-P1a ADENDO 3 item 6) ----
+     Padrão = superfície clara: âmbar-700 (4,63 off-white, 5,04 white,
+     4,03 grafite-100). Em [data-superficie="grafite"] vira âmbar-500 e em
+     [data-superficie="ambar"] grafite-950 (regras abaixo do @theme). */
+  --color-foco: var(--color-ambar-700);
+
+  /* ---- Cor: verde WhatsApp (só para o botão de WhatsApp) ---- */
+  --color-whatsapp-700: #0d5c3f; /* fundo do botão, texto branco (AA) */
+  --color-whatsapp-800: #0a4a33; /* hover */
+  /* Par do tom ESCURO (superfície grafite e barra): fundo claro + texto
+     grafite-950. Forma contra grafite-950 9,13:1 (7,25 em grafite-800). */
+  --color-whatsapp-400: #25d366; /* fundo do botão, texto grafite-950 */
+  --color-whatsapp-300: #5fe08f; /* hover */
+
+  /* ---- Cor: marca do letreiro (P4 MC1) ----
+     Lidas nas fotos da fachada (perfil-google/fotos 01 de dia, 08 à noite;
+     10 só como conferência). Ponto de amostra e compensação de luz de cada
+     uma: scripts/gerar-marca/origem.json. Uso SÓ dentro da marca
+     (src/lib/marca.js, LETREIRO_TOKENS), sempre sobre o painel grafite-950:
+     amarelo 13,6:1, vermelho 3,8:1, prata 8,7:1, prata-escura 4,0:1
+     (contorno 1,6:1 de propósito: é a borda escura das letras, não parte
+     de leitura; é assim na fachada). */
+  --color-marca-amarelo: #fae005; /* SANDRO e anel do mostrador */
+  --color-marca-vermelho: #d4353b; /* MECÂNICA e ponteiro (MC1b: o do dia, foto 01) */
+  --color-marca-prata: #b5b3b5; /* bisel do mostrador e cubo do ponteiro */
+  --color-marca-prata-escura: #777577; /* zona escura do bisel */
+  --color-marca-contorno: #4a3520; /* contorno escuro das letras e do mostrador */
+
+  /* ---- Tipografia ---- */
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-texto: "Inter Variable", sans-serif;
+
+  /* ---- Escala de espaço ---- */
+  --spacing-3xs: 0.25rem;
+  --spacing-2xs: 0.5rem;
+  --spacing-xs: 0.75rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4.5rem;
+  --spacing-3xl: 6rem;
+  --spacing-4xl: 8rem;
+
+  /* ---- Largura máxima de bloco de texto ----
+     Os nomes padrão do Tailwind (max-w-xs, max-w-2xl...) colidem com a
+     escala de espaço acima (--spacing-xs, --spacing-2xl...) e viram
+     larguras minúsculas. Estes nomes não colidem. */
+  --container-legenda: 20rem; /* legendas e textos curtos de apoio */
+  --container-texto: 36rem; /* parágrafos e subtítulos (~65 caracteres) */
+  --container-titulo: 48rem; /* bloco de título de seção / hero */
+
+  /* ---- Raio (controles) ----
+     Selo, moldura e painel usam o chanfro (abaixo), não raio. Demais
+     cantos 0. Sem sombra: o namespace --shadow-* está zerado acima. */
+  --radius-sm: 0.25rem; /* controles (botões, campos) */
+  --radius-full: 999px; /* só luz-espia e marco da estrada */
+
+  /* ---- Barra fixa <768 e alvo de toque ---- */
+  --spacing-barra: 4rem; /* filete 2 âmbar-500 + 6 + botões 48 + 8 */
+  --spacing-alvo: 3rem; /* todo interativo >= 48x48 */
+
+  /* ---- Escala do hover da foto (ADENDO 3 item 1) ----
+     A Foto aproxima 4% dentro da moldura (6 a 14 px por lado), em
+     --duracao-lenta / --ease-padrao, só com hover real e sem movimento
+     reduzido. */
+  --escala-foto-aproxima: 1.04;
+
+  /* ---- Easing e duração de animação ---- */
+  --ease-padrao: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-saida: cubic-bezier(0, 0, 0.2, 1);
+  --ease-entrada: cubic-bezier(0.4, 0, 1, 1);
+  --duracao-rapida: 150ms;
+  --duracao-base: 250ms;
+  --duracao-lenta: 400ms;
+  --duracao-entrada-texto: 400ms; /* texto sobe (16px) */
+  --duracao-entrada-cortina: 500ms; /* foto abre na diagonal do chanfro */
+  --duracao-entrada-traco: 300ms; /* linha de índice se traça */
+  --duracao-entrada-hodometro: 800ms; /* "2018" em hodômetro */
+  --duracao-estrada: 1600ms; /* estrada por tempo a >=1024 (4 x 400) */
+
+  /* Os utilitários duration-* do Tailwind leem --transition-duration-*;
+     estes apelidos fazem `duration-rapida|base|lenta` existir de fato. */
+  --transition-duration-rapida: var(--duracao-rapida);
+  --transition-duration-base: var(--duracao-base);
+  --transition-duration-lenta: var(--duracao-lenta);
+  --transition-duration-entrada-texto: var(--duracao-entrada-texto);
+  --transition-duration-entrada-cortina: var(--duracao-entrada-cortina);
+  --transition-duration-entrada-traco: var(--duracao-entrada-traco);
+  --transition-duration-entrada-hodometro: var(--duracao-entrada-hodometro);
+  --transition-duration-estrada: var(--duracao-estrada);
+  /* Escalonamento: atraso = min(ordem x 60ms, 300ms), ordem no lote. */
+  --atraso-escalonamento: 60ms;
+  --escalonamento-teto: 300ms;
+
+  /* ---- Chanfro 45° no canto inferior direito (selo, moldura, painel):
+     --chanfro-sm <768, --chanfro >=768 ---- */
+  --chanfro: var(--spacing-xl);
+  --chanfro-sm: var(--spacing-md);
+}
+
+body {
+  font-family: var(--font-texto);
+  background-color: var(--color-off-white);
+  color: var(--color-grafite-900);
+}
+
+h1,
+h2,
+h3,
+h4,
+.fonte-display {
+  font-family: var(--font-display);
+}
+
+html {
+  scroll-padding-top: var(--spacing-3xl);
+}
+
+/* Foco único para todo interativo (DESENHO §5; ADENDO 3 item 6): sólido
+   de 2, afastado 2, na cor --color-foco da superfície; nenhum interativo
+   põe contorno próprio. A margem de rolagem é o tamanho do anel (2 + 2 =
+   3xs): o foco levado pela rolagem para rente à barra ainda fica com o
+   anel à vista, e não 1 px sob ela.
+   A cor segue data-superficie no elemento que pinta o fundo: clara é o
+   padrão (:root), grafite e ambar trocam o token para os descendentes. */
+@layer base {
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-foco scroll-m-3xs;
+  }
+  [data-superficie="grafite"] {
+    --color-foco: var(--color-ambar-500);
+  }
+  [data-superficie="ambar"] {
+    --color-foco: var(--color-grafite-950);
+  }
+}
+
+/* Barra fixa <768 (DECISOES-P1a item 6; BarraFixa.astro): o body reserva
+   a altura dela + safe-area, e a rolagem por âncora/foco para acima dela. */
+@variant max-md {
+  html {
+    scroll-padding-bottom: calc(var(--spacing-barra) + env(safe-area-inset-bottom));
+  }
+  body {
+    padding-bottom: calc(var(--spacing-barra) + env(safe-area-inset-bottom));
+  }
+}
+
+/* ------------------------------------------------------------------
+ * Recorte padrão das fotos: canto inferior direito chanfrado, eco do
+ * selo da marca. Toda foto da landing usa uma destas duas classes.
+ * ------------------------------------------------------------------ */
+.recorte-chanfro,
+.recorte-chanfro-sm {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--c)),
+    calc(100% - var(--c)) 100%,
+    0 100%
+  );
+}
+.recorte-chanfro {
+  --c: var(--chanfro-sm);
+}
+@variant md {
+  .recorte-chanfro {
+    --c: var(--chanfro);
+  }
+}
+.recorte-chanfro-sm {
+  --c: var(--chanfro-sm);
+}
+
+/* ------------------------------------------------------------------
+ * Movimento.
+ * Regra de ouro: nada começa oculto sem JS. O reveal só esconde
+ * elementos depois que src/scripts/reveal.ts marcou <html> com
+ * "reveal-ativo" (e ele não marca com prefers-reduced-motion).
+ * Sobe 16 (--spacing-sm). Oculto é só opacidade: o deslocamento mora
+ * na animação, então a caixa que o observer mede é a da página.
+ * ------------------------------------------------------------------ */
+.reveal-ativo [data-reveal]:not(.revelado) {
+  opacity: 0;
+}
+@keyframes revelar {
+  from {
+    opacity: 0;
+    transform: translateY(var(--spacing-sm));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Animação (e não transition) para não sobrescrever a transition de
+   hover que o próprio elemento possa ter. */
+.reveal-ativo [data-reveal].revelado {
+  animation: revelar var(--duracao-entrada-texto) var(--ease-saida) both;
+  animation-delay: min(calc(var(--ordem, 0) * var(--atraso-escalonamento)), var(--escalonamento-teto));
+}
+
+/* Entrada do hero: só deslocamento/escala, o conteúdo nunca fica
+   transparente nem oculto. */
+@keyframes subir-suave {
+  from {
+    transform: translateY(var(--spacing-md));
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes barra-crescer {
+  from {
+    transform: scaleX(0.2);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.entrada-hero {
+  animation: subir-suave var(--duracao-entrada-texto) var(--ease-saida) both;
+  animation-delay: min(calc(var(--ordem, 0) * var(--atraso-escalonamento)), var(--escalonamento-teto));
+}
+.entrada-barra {
+  transform-origin: left;
+  animation: barra-crescer var(--duracao-entrada-traco) var(--ease-saida) both;
+}
+
+/* ------------------------------------------------------------------
+ * Estrada do "Como funciona" (vertical até lg, horizontal a partir dele).
+ * --progresso vai de 0 a 1; --passos (nº de trechos) vem da seção, que o
+ * lê de oficina.passos. Padrão 1 (estrada cheia): é o que vale sem
+ * JS e com movimento reduzido. src/scripts/estrada.ts só atualiza o
+ * valor quando o movimento está liberado.
+ * ------------------------------------------------------------------ */
+.estrada {
+  --progresso: 1;
+}
+.estrada-trecho {
+  background-color: var(--color-grafite-800);
+}
+.estrada-preenchimento {
+  background-color: var(--color-ambar-500);
+  transform-origin: top;
+  transform: scaleY(clamp(0, calc(var(--progresso) * var(--passos) - var(--i)), 1));
+}
+.estrada-faixa {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--color-white) 0 var(--spacing-xs),
+    transparent var(--spacing-xs) var(--spacing-md)
+  );
+}
+@variant lg {
+  .estrada-preenchimento {
+    transform-origin: left;
+    transform: scaleX(clamp(0, calc(var(--progresso) * var(--passos) - var(--i)), 1));
+  }
+  .estrada-faixa {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--color-white) 0 var(--spacing-sm),
+      transparent var(--spacing-sm) var(--spacing-lg)
+    );
+  }
+}
+.estrada-marco {
+  transition:
+    background-color var(--duracao-base) var(--ease-padrao),
+    color var(--duracao-base) var(--ease-padrao),
+    border-color var(--duracao-base) var(--ease-padrao),
+    transform var(--duracao-base) var(--ease-padrao);
+}
+.estrada-js .estrada-marco:not([data-ativo]) {
+  background-color: var(--color-white);
+  border-color: var(--color-grafite-100);
+  color: var(--color-grafite-500);
+  transform: scale(0.9);
+}
+
+/* ------------------------------------------------------------------
+ * Teste de lâmpadas do painel de sintomas (M3; src/scripts/lampadas.ts).
+ * As luzes-espia acendem juntas (o estado aceso é o mesmo do :has em
+ * PainelSintomas.astro) e apagam em escalonamento, uma vez. Só existe
+ * sob .lampadas-teste, que o script põe; sem JS e com movimento
+ * reduzido as luzes ficam em repouso. Fill backwards: acesa durante o
+ * atraso, e depois do fim nenhum resto por cima do hover/foco.
+ * ------------------------------------------------------------------ */
+@keyframes lampada-teste {
+  from {
+    background-color: var(--color-ambar-500);
+    border-color: var(--color-ambar-500);
+    color: var(--color-grafite-950);
+  }
+}
+.lampadas-teste [data-luz] {
+  animation: lampada-teste var(--duracao-lenta) var(--ease-padrao) backwards;
+  animation-delay: min(calc(var(--ordem, 0) * var(--atraso-escalonamento)), var(--escalonamento-teto));
+}
+
+/* ------------------------------------------------------------------
+ * Traço das linhas do índice de serviços (M4; Servicos.astro
+ * [data-traco]). A divisória de cada linha se traça da esquerda quando
+ * o grupo revela. Só existe sob .reveal-ativo, que só reveal.ts põe:
+ * sem JS e com movimento reduzido a linha está sempre inteira.
+ * Atraso = min((ordem do grupo no lote + --linha) x 60, 300): a linha
+ * nunca começa antes do próprio grupo e o grupo inteiro cabe no teto.
+ * Fill backwards: depois do fim não sobra transform.
+ * ------------------------------------------------------------------ */
+@keyframes tracar {
+  from {
+    transform: scaleX(0);
+  }
+}
+.reveal-ativo [data-reveal].revelado [data-traco] {
+  animation: tracar var(--duracao-entrada-traco) var(--ease-saida) backwards;
+  animation-delay: min(
+    calc((var(--ordem, 0) + var(--linha, 0)) * var(--atraso-escalonamento)),
+    var(--escalonamento-teto)
+  );
+}
+
+/* ------------------------------------------------------------------
+ * Cortina das fotos (M5; ui/Foto.astro [data-foto]). A foto abre na
+ * diagonal do chanfro, do canto superior esquerdo até ele: a frente é a
+ * borda dura de uma máscara linear a 135deg, cujas linhas de mesmo valor
+ * (x + y = constante) são paralelas ao chanfro de 45° da moldura. O
+ * que ainda não abriu mostra a própria moldura grafite-800: nada é
+ * pintado por cima da foto. Fora da animação --cortina vale 100% (o
+ * valor inicial): a máscara cobre a foto inteira. Só o alfa dela conta.
+ * Só existe sob .reveal-ativo, que só reveal.ts põe: sem JS e com
+ * movimento reduzido a foto está sempre inteira.
+ * - Foto dentro de [data-reveal]: abre quando o bloco revela, sem o
+ *   atraso do lote (aberta em <= 600 ms), e anula a subida de 16 do
+ *   bloco com a mesma curva e o mesmo atraso: a foto não se desloca.
+ * - Foto fora de [data-reveal] (hero): abre quando o reveal ativa.
+ * ------------------------------------------------------------------ */
+@property --cortina {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@keyframes cortina {
+  from {
+    --cortina: 0%;
+  }
+}
+@keyframes foto-parada {
+  from {
+    transform: translateY(calc(-1 * var(--spacing-sm)));
+  }
+}
+.reveal-ativo [data-reveal].revelado [data-foto] > picture,
+.reveal-ativo [data-foto]:not([data-reveal] *) > picture {
+  mask-image: linear-gradient(135deg, black var(--cortina), transparent var(--cortina));
+  animation: cortina var(--duracao-entrada-cortina) var(--ease-saida) backwards;
+}
+.reveal-ativo [data-reveal].revelado [data-foto] {
+  animation: foto-parada var(--duracao-entrada-texto) var(--ease-saida) backwards;
+  animation-delay: min(calc(var(--ordem, 0) * var(--atraso-escalonamento)), var(--escalonamento-teto));
+}
+
+/* ------------------------------------------------------------------
+ * Hodômetro do ano (M6; Sobre.astro [data-hodometro], hodometro.ts).
+ * Só existe depois que o script montou .hodometro (ele não monta sem JS
+ * nem com movimento reduzido): sem isso o ano do HTML fica como está.
+ * - A reserva é o próprio texto do ano, transparente: guarda largura e
+ *   altura (inline-block na mesma linha de base) e segue no innerText e
+ *   na árvore de acessibilidade.
+ * - Os rolos cobrem a reserva, um por algarismo (tabular-nums: larguras
+ *   iguais). A fita é 0-9 duas vezes (20 casas) no ::before, fora do
+ *   DOM; parada no 0 até girar, gira uma volta e para no algarismo.
+ * ------------------------------------------------------------------ */
+.hodometro {
+  display: inline-block;
+  position: relative;
+}
+.hodometro-reserva {
+  opacity: 0;
+}
+.hodometro-rolos {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+.hodometro-rolo {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.hodometro-fita {
+  display: block;
+  transform: translateY(calc(var(--passos, 0) * -100% / 20));
+}
+.hodometro-fita::before {
+  display: block;
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9\A 0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
+  white-space: pre;
+  text-align: center;
+}
+.hodometro:not(.hodometro-girando) .hodometro-fita {
+  transform: none;
+}
+@keyframes hodometro {
+  from {
+    transform: none;
+  }
+}
+.hodometro-girando .hodometro-fita {
+  animation: hodometro var(--duracao-entrada-hodometro) var(--ease-saida);
+}
+
+/* ------------------------------------------------------------------
+ * FAQ: <details>/<summary>. Abre com animação de altura onde o
+ * navegador suporta ::details-content; nos demais, a resposta entra
+ * com um deslize curto. Sem JS funciona igual (é HTML nativo).
+ * ------------------------------------------------------------------ */
+.faq-item summary {
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item .faq-sinal {
+  transition: transform var(--duracao-base) var(--ease-padrao);
+}
+.faq-item[open] .faq-sinal {
+  transform: rotate(45deg);
+}
+.faq-item[open] .faq-resposta {
+  animation: subir-suave var(--duracao-lenta) var(--ease-saida);
+}
+@supports selector(::details-content) {
+  .faq-lista {
+    interpolate-size: allow-keywords;
+  }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      block-size var(--duracao-lenta) var(--ease-padrao),
+      content-visibility var(--duracao-lenta) allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* Movimento reduzido: tudo visível, estático, estrada cheia. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .estrada {
+    --progresso: 1 !important;
+  }
+  /* ::details-content não é alcançado pelo seletor universal acima. */
+  .faq-item::details-content {
+    transition-duration: 1ms !important;
+  }
+}

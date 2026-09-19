@@ -1,0 +1,136 @@
+---
+interface Props {
+  /** Rótulo curto acima do título (ex.: "SERVIÇOS"). */
+  eyebrow?: string;
+  titulo: string;
+  subtitulo?: string;
+  /** Alinha o cabeçalho ao centro em vez de à esquerda (só sem `variante`). */
+  centralizado?: boolean;
+  /** Cor do fundo sobre o qual o cabeçalho aparece. */
+  tom?: "claro" | "escuro";
+  /** Nível do título (padrão h2). */
+  nivel?: "h2" | "h3";
+  /** id do título, para aria-labelledby da seção. */
+  idTitulo?: string;
+  /**
+   * Abridor de seção (DECISOES-P1a item 8). Sem `variante`, o cabeçalho é o
+   * de antes. etiqueta: Serviços, FAQ. placa: Sintomas, Como funciona,
+   * Localização. dado: Sobre. Seções vizinhas não repetem a variante.
+   */
+  variante?: "etiqueta" | "placa" | "dado";
+  /** Valor exibido pela variante "dado" (vem de oficina.ts, ex.: desdeAno). */
+  dado?: string | number;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  titulo,
+  subtitulo,
+  centralizado = false,
+  tom = "claro",
+  nivel = "h2",
+  idTitulo,
+  variante,
+  dado,
+  class: classeExtra,
+} = Astro.props;
+
+const escuro = tom === "escuro";
+const Titulo = nivel;
+const corTitulo = escuro ? "text-off-white" : "text-grafite-950";
+const corEyebrow = escuro ? "text-ambar-500" : "text-ambar-700";
+const corLead = escuro ? "text-grafite-300" : "text-grafite-500";
+const classesEyebrow =
+  "flex items-center gap-xs font-display text-sm font-bold uppercase tracking-widest";
+const classesTitulo = "leading-none font-extrabold tracking-tight uppercase text-balance";
+const classesLead = "max-w-texto text-lg leading-relaxed text-pretty";
+---
+
+{
+  variante === "etiqueta" && (
+    <div
+      data-abridor="etiqueta"
+      class:list={["lg:grid lg:grid-cols-12 lg:items-end lg:gap-xl", classeExtra]}
+    >
+      <div class="lg:col-span-7">
+        <p class:list={[classesEyebrow, corEyebrow]}>
+          <span class="h-0 w-lg border-t-2 border-current" aria-hidden="true" />
+          {eyebrow}
+        </p>
+        <Titulo
+          id={idTitulo}
+          class:list={["mt-xs text-4xl md:text-5xl lg:text-6xl", classesTitulo, corTitulo]}
+        >
+          {titulo}
+        </Titulo>
+      </div>
+      {subtitulo && (
+        <p class:list={["mt-md lg:col-span-5 lg:mt-0", classesLead, corLead]}>{subtitulo}</p>
+      )}
+    </div>
+  )
+}
+
+{
+  variante === "placa" && (
+    <div data-abridor="placa" class:list={["max-w-titulo", classeExtra]}>
+      <div class="recorte-chanfro-sm bg-grafite-950 p-md md:p-lg">
+        {eyebrow && <p class:list={[classesEyebrow, "text-ambar-500"]}>{eyebrow}</p>}
+        <Titulo
+          id={idTitulo}
+          class:list={[
+            "text-3xl text-off-white md:text-4xl lg:text-5xl",
+            eyebrow && "mt-xs",
+            classesTitulo,
+          ]}
+        >
+          {titulo}
+        </Titulo>
+      </div>
+      {subtitulo && <p class:list={["mt-md", classesLead, corLead]}>{subtitulo}</p>}
+    </div>
+  )
+}
+
+{
+  variante === "dado" && (
+    <div data-abridor="dado" class:list={["max-w-titulo", classeExtra]}>
+      {eyebrow && <p class:list={[classesEyebrow, corEyebrow]}>{eyebrow}</p>}
+      {dado != null && (
+        <p class:list={["font-display text-7xl leading-none font-extrabold tabular-nums md:text-8xl lg:text-9xl", corEyebrow]}>
+          {dado}
+        </p>
+      )}
+      <Titulo
+        id={idTitulo}
+        class:list={["mt-xs text-3xl md:text-4xl", classesTitulo, corTitulo]}
+      >
+        {titulo}
+      </Titulo>
+      {subtitulo && <p class:list={["mt-md", classesLead, corLead]}>{subtitulo}</p>}
+    </div>
+  )
+}
+
+{
+  !variante && (
+    <div class:list={["max-w-titulo", centralizado && "mx-auto text-center", classeExtra]}>
+      {eyebrow && (
+        <p class:list={[classesEyebrow, centralizado && "justify-center", corEyebrow]}>
+          <span class="h-px w-lg bg-current" aria-hidden="true" />
+          {eyebrow}
+        </p>
+      )}
+      <Titulo
+        id={idTitulo}
+        class:list={["mt-xs text-4xl md:text-5xl lg:text-6xl", classesTitulo, corTitulo]}
+      >
+        {titulo}
+      </Titulo>
+      {subtitulo && (
+        <p class:list={["mt-md", classesLead, centralizado && "mx-auto", corLead]}>{subtitulo}</p>
+      )}
+    </div>
+  )
+}

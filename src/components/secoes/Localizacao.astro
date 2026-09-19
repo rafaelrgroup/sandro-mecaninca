@@ -1,0 +1,107 @@
+---
+import Botao from "@/components/ui/Botao.astro";
+import CabecalhoSecao from "@/components/ui/CabecalhoSecao.astro";
+import Container from "@/components/ui/Container.astro";
+import Icone from "@/components/ui/Icone.astro";
+import oficina from "@/data/oficina";
+import { comoChegar, enderecoEmLinha, mapaIncorporado, tel, waze } from "@/lib/links";
+
+const { endereco } = oficina;
+
+const horario = oficina.horario.trim();
+const linkGoogle = oficina.linkGoogle.trim();
+
+// Pares que não podem se separar na quebra de linha: o número fica com a
+// última palavra da rua ("Santos, 66") e o nome do bairro não parte ao meio.
+const colar = (texto: string) => texto.replace(/ /g, "\u00a0");
+const logradouro = endereco.logradouro.replace(/ (\S+)$/, "\u00a0$1");
+---
+
+<section id="localizacao" aria-labelledby="localizacao-titulo" class="bg-white py-3xl md:py-4xl">
+  <Container>
+    <!-- Painel chanfrado (DECISOES-P1a item 2): a placa do abridor entra
+         nele (item 8), na mesma superfície grafite-950. -->
+    <div class="recorte-chanfro grid overflow-hidden lg:grid-cols-12" data-reveal>
+      <div class="flex flex-col bg-grafite-950 text-off-white lg:col-span-5" data-superficie="grafite">
+        <CabecalhoSecao
+          variante="placa"
+          idTitulo="localizacao-titulo"
+          eyebrow="Onde estamos"
+          titulo={`No bairro ${colar(endereco.bairro)}, em ${endereco.cidade}`}
+        />
+        <div class="flex flex-1 flex-col gap-lg px-md pb-md md:px-lg md:pb-lg">
+          <address class="not-italic">
+            <p class="flex items-center gap-2xs font-display text-sm font-bold uppercase tracking-widest text-grafite-400">
+              <Icone nome="mdi:map-marker" class="size-5 text-ambar-500" />
+              Endereço
+            </p>
+            <p class="mt-xs font-display text-3xl leading-tight font-bold uppercase text-balance">
+              {logradouro}
+            </p>
+            <p class="mt-2xs text-grafite-300">
+              <span class="whitespace-nowrap">{endereco.bairro}</span> ·{" "}
+              <span class="whitespace-nowrap">{endereco.cidade}/{endereco.uf}</span> ·{" "}
+              <span class="whitespace-nowrap">CEP {endereco.cep}</span>
+            </p>
+          </address>
+
+          <div>
+            <p class="flex items-center gap-2xs font-display text-sm font-bold uppercase tracking-widest text-grafite-400">
+              <Icone nome="mdi:phone" class="size-5 text-ambar-500" />
+              Telefone e WhatsApp
+            </p>
+            <a
+              href={tel}
+              class="mt-xs inline-flex min-h-alvo items-center rounded-sm font-display text-3xl font-bold whitespace-nowrap tabular-nums transition-colors duration-rapida ease-padrao hover:text-ambar-400"
+            >
+              {oficina.telefone}
+            </a>
+          </div>
+
+          {
+            horario && (
+              <div>
+                <p class="flex items-center gap-2xs font-display text-sm font-bold uppercase tracking-widest text-grafite-400">
+                  <Icone nome="mdi:clock-outline" class="size-5 text-ambar-500" />
+                  Horário
+                </p>
+                <p class="mt-xs text-grafite-300">{horario}</p>
+              </div>
+            )
+          }
+
+          <div class="mt-auto flex flex-col gap-sm sm:flex-row sm:flex-wrap">
+            <Botao href={comoChegar} tom="escuro" icone="mdi:google-maps" target="_blank">
+              Como chegar
+            </Botao>
+            <Botao href={waze} variante="contorno" tom="escuro" icone="mdi:waze" target="_blank">
+              Abrir no Waze
+            </Botao>
+            {
+              linkGoogle && (
+                <Botao href={linkGoogle} variante="contorno" tom="escuro" icone="mdi:google" target="_blank">
+                  Ver no Google
+                </Botao>
+              )
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- O mapa fica fora da ordem do Tab (tabindex -1): o foco dentro de
+           um documento de outra origem não recebe o anel nem respeita a
+           reserva da barra fixa. Tudo o que ele oferece está nos links ao
+           lado (Como chegar, Waze, Google). Clique e toque seguem iguais. -->
+      <div class="relative aspect-4/3 bg-grafite-100 lg:col-span-7 lg:aspect-auto">
+        <iframe
+          tabindex="-1"
+          src={mapaIncorporado}
+          title={`Mapa com a localização da ${oficina.nome}: ${enderecoEmLinha}`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="absolute inset-0 size-full border-0 grayscale transition duration-lenta ease-padrao hover:grayscale-0"
+        ></iframe>
+      </div>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,67 @@
+---
+// Primitiva Foto (DESENHO-APROVADO §3; DECISOES-P1a itens 2 e 9).
+// Toda foto da landing sai daqui, pedida pelo slot do manifesto
+// (src/data/fotos.ts, função foto()). Moldura com o chanfro de 45° no
+// canto inferior direito (.recorte-chanfro de global.css), tom-base
+// grafite-800 enquanto a imagem não chega, SEM véu nem gradiente: nada
+// é desenhado por cima da foto. O hover aproxima a foto dentro da moldura
+// (--escala-foto-aproxima, --duracao-lenta, origem no centro; ADENDO 3
+// item 1), só com hover real e sem movimento reduzido. A moldura reserva a proporção do mestre
+// (--proporcao): nada desloca quando a imagem chega.
+// Entrada (M5): o <picture> abre em cortina na diagonal do chanfro, sobre
+// a própria moldura; a regra mora no bloco "Cortina das fotos" de
+// global.css e pega [data-foto] > picture, só sob .reveal-ativo.
+import { getImage } from "astro:assets";
+import { foto, type SlotFoto } from "@/data/fotos";
+
+interface Props {
+  /** Slot do manifesto src/data/fotos.ts. */
+  slot: SlotFoto;
+  /** Atributo sizes da imagem: a largura que a foto ocupa na seção (ex.: "(min-width: 1024px) 50vw, 100vw"). */
+  sizes: string;
+  /** Foto da dobra (hero): carrega já, com prioridade alta. Padrão: lazy. */
+  prioridade?: boolean;
+  /** Classe extra da moldura, sempre com tokens do design system. */
+  class?: string;
+}
+
+const { slot, sizes, prioridade = false, class: classe } = Astro.props;
+const { imagem, alt, largura, altura } = foto(slot);
+
+// Formatos (DECISOES-P1a item 9): build AVIF q50 + WebP q75; em DEV só
+// WebP, porque codificar AVIF é o que atrasava a imagem no dev.
+// Esta constante é o único lugar do projeto que decide isso.
+const SO_WEBP = import.meta.env.DEV;
+
+// Larguras do srcset até a largura do mestre (1920 no hero, 1440 nos demais).
+const larguras = [...new Set([640, 960, 1280, 1920].filter((l) => l < largura).concat(largura))];
+
+const opcoes = { src: imagem, widths: larguras, sizes };
+const webp = await getImage({ ...opcoes, format: "webp", quality: 75 });
+const avif = SO_WEBP ? null : await getImage({ ...opcoes, format: "avif", quality: 50 });
+const decorativa = alt === "";
+---
+
+<div
+  class:list={["group recorte-chanfro relative aspect-(--proporcao) overflow-hidden bg-grafite-800", classe]}
+  style={`--proporcao: ${largura} / ${altura}`}
+  aria-hidden={decorativa ? "true" : undefined}
+  data-foto={slot}
+>
+  <picture class="block size-full">
+    {avif && <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />}
+    <img
+      src={webp.src}
+      srcset={webp.srcSet.attribute}
+      sizes={sizes}
+      width={largura}
+      height={altura}
+      alt={alt}
+      loading={prioridade ? "eager" : "lazy"}
+      fetchpriority={prioridade ? "high" : undefined}
+      decoding="async"
+      class="block size-full object-cover transition-transform duration-lenta ease-padrao motion-safe:group-hover:scale-(--escala-foto-aproxima)"
+    />
+  </picture>
+</div>
+

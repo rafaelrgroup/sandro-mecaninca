@@ -1,0 +1,60 @@
+---
+// Sobre (P2 F11; DESENHO §4 item 6, DECISOES-P1a 8 e 9). Abridor "dado":
+// o ano de oficina.desdeAno em grande. Foto de bancada na moldura da
+// primitiva Foto, sem overlay, com o texto AO LADO (nunca por cima).
+// As afirmações vêm da lista tipada (fonte "receita": cadastro do CNPJ);
+// "desde <ano>" aparece só no abridor (no máximo 1 vez nesta seção).
+// Prova social do Google (P4 PS3): ProvaSocial, depois da lista da Receita.
+// Hodômetro do ano (P3 M6): data-hodometro diz ao scripts/hodometro.ts
+// qual ano o abridor escreveu; o script só o lê e o faz rolar.
+import CabecalhoSecao from "@/components/ui/CabecalhoSecao.astro";
+import Container from "@/components/ui/Container.astro";
+import Foto from "@/components/ui/Foto.astro";
+import ProvaSocial from "@/components/ui/ProvaSocial.astro";
+import oficina, { afirmacoes } from "@/data/oficina";
+
+const fatos = [afirmacoes.meiDesde, afirmacoes.cnpjAtivo, afirmacoes.atividadePrincipal];
+---
+
+<section id="sobre" aria-labelledby="sobre-titulo" class="bg-white py-3xl md:py-4xl">
+  <Container class="grid gap-xl md:grid-cols-2 md:items-center lg:gap-3xl">
+    <div data-reveal>
+      <Foto slot="sobre" sizes="(min-width: 768px) 50vw, 100vw" />
+    </div>
+
+    <div data-reveal data-hodometro={oficina.desdeAno}>
+      <CabecalhoSecao
+        variante="dado"
+        idTitulo="sobre-titulo"
+        eyebrow="Desde"
+        dado={oficina.desdeAno}
+        titulo={`Mecânica de bairro em ${oficina.endereco.cidade}`}
+      />
+      <div class="mt-md space-y-sm text-lg leading-relaxed text-grafite-800">
+        <p>
+          A {oficina.nome} atende na {oficina.endereco.logradouro}, bairro
+          {" "}{oficina.endereco.bairro}.
+        </p>
+        <p class="text-grafite-500">
+          {afirmacoes.orcamentoVoceDecide.texto}
+        </p>
+      </div>
+      <ul class="mt-lg space-y-xs border-t border-grafite-100 pt-md" role="list" data-afirmacoes-receita>
+        {
+          fatos.map((fato) => (
+            <li class="flex items-start gap-xs text-sm font-medium text-grafite-800">
+              <span class="mt-xs h-px w-sm shrink-0 bg-ambar-700" aria-hidden="true" />
+              {fato.texto}
+            </li>
+          ))
+        }
+      </ul>
+      <ProvaSocial />
+    </div>
+  </Container>
+</section>
+
+<script>
+  // Hodômetro do ano (M6): lê o ano já escrito pelo abridor e o faz rolar 1 vez.
+  import "@/scripts/hodometro";
+</script>

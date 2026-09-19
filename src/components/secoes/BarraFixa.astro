@@ -1,0 +1,39 @@
+---
+// Barra fixa do celular (<768), DECISOES-P1a item 6: fixa, opaca, largura
+// total, sempre presente, zero JS. Altura --spacing-barra (4rem) = filete 2
+// âmbar-500 + 6 + botões 48 + 8, mais o safe-area-inset DENTRO dela (padding
+// de baixo). Os 6 de cima saem do alinhamento ao pé: 64 - 2 - 8 - 48.
+// Botões com altura = --spacing-alvo (o contorno de 2 do Ligar não soma).
+// WhatsApp 3fr / Ligar 2fr, vão 8. O body reserva o mesmo (global.css).
+import Botao from "@/components/ui/Botao.astro";
+import oficina from "@/data/oficina";
+import { tel, whatsappGeral } from "@/lib/links";
+---
+
+<nav
+  aria-label="Contato"
+  data-barra-fixa
+  data-superficie="grafite"
+  class="barra-fixa fixed inset-x-0 bottom-0 z-40 grid grid-cols-[3fr_2fr] items-end gap-2xs border-t-2 border-ambar-500 bg-grafite-950 px-2xs md:hidden"
+>
+  <Botao
+    href={whatsappGeral()}
+    variante="whatsapp"
+    tom="escuro"
+    icone="mdi:whatsapp"
+    target="_blank"
+    class="h-alvo w-full"
+  >
+    WhatsApp
+  </Botao>
+  <Botao href={tel} variante="contorno" tom="escuro" icone="mdi:phone" class="h-alvo w-full">
+    Ligar<span class="sr-only"> para {oficina.telefone}</span>
+  </Botao>
+</nav>
+
+<style>
+  .barra-fixa {
+    height: calc(var(--spacing-barra) + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--spacing-2xs) + env(safe-area-inset-bottom));
+  }
+</style>

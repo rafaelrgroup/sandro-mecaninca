@@ -1,0 +1,40 @@
+{
+  "name": "sandro-mecanica",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "marca": "node scripts/gerar-marca/index.js",
+    "prancha": "node scripts/gerar-marca/prancha.js",
+    "tratar-fotos": "node scripts/tratar-fotos/index.js",
+    "folha": "node scripts/tratar-fotos/folha.mjs && node scripts/tratar-fotos/capturar-folha.mjs",
+    "teste:afirmacoes-e-fotos": "node testes/afirmacoes-e-fotos.mjs",
+    "teste:marca-render": "node testes/marca-render.mjs",
+    "teste:marca-geometria": "node testes/marca-geometria.mjs",
+    "teste:marca-geometria-mutacoes": "node testes/marca-geometria-mutacoes.mjs",
+    "teste:fotos-tratamento": "node testes/fotos-tratamento.mjs",
+    "teste:mutacao-endereco": "node testes/mutacao-endereco.mjs",
+    "testes": "npm run teste:afirmacoes-e-fotos && npm run teste:marca-render && npm run teste:marca-geometria && npm run teste:marca-geometria-mutacoes && npm run teste:fotos-tratamento"
+  },
+  "dependencies": {
+    "astro": "^7.3.3",
+    "astro-icon": "^1.2.0",
+    "@iconify-json/mdi": "^1.2.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4",
+    "opentype.js": "^2.0.0"
+  }
+}

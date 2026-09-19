@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Nome do ícone: "mdi:nome" para o pacote MDI, ou "correia-dentada"
+   * (e outros arquivos de src/icons) para os ícones locais do projeto. */
+  nome: string;
+  class?: string;
+  "aria-hidden"?: boolean;
+  title?: string;
+}
+
+const { nome, class: classe, "aria-hidden": ariaHidden = true, title } = Astro.props;
+---
+
+<Icon name={nome} class={classe} aria-hidden={ariaHidden} title={title} />
