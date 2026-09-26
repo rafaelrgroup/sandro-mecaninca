@@ -56,6 +56,9 @@ const faqJson = faqLd ? JSON.stringify(faqLd).replace(/</g, "\\u003c") : null;
 
     <script type="application/ld+json" set:html={jsonLd} />
     {faqJson && <script type="application/ld+json" set:html={faqJson} />}
+
+    <!-- Vextor -->
+    <script src="https://simpletk.sandromecanica.com.br/api/v1/js/0102B.js" async></script>
   </head>
   <body class="min-h-screen font-texto antialiased">
     <slot />
